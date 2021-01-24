@@ -61,4 +61,4 @@ crashlytics-build.properties
 # Visual Studio Code Workspaces
 *.code-workspace
 
-GGJ_2021/Library/**
+./Library/**
