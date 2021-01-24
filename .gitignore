@@ -63,3 +63,6 @@ crashlytics-build.properties
 *.code-workspace
 
 ./Library/**
+
+
+/GGJ_2021/Library/**
