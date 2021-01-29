@@ -16533,27 +16533,27 @@ PrefabInstance:
     - target: {fileID: -8679921383154817045, guid: 070701cd86a865849841ad5cdc5294f9,
         type: 3}
       propertyPath: m_LocalRotation.w
-      value: 0.00015667082
+      value: 0.0001110243
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: 070701cd86a865849841ad5cdc5294f9,
         type: 3}
       propertyPath: m_LocalRotation.x
-      value: -0
+      value: -0.0001110243
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: 070701cd86a865849841ad5cdc5294f9,
         type: 3}
       propertyPath: m_LocalRotation.y
-      value: -1
+      value: -0.7071068
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: 070701cd86a865849841ad5cdc5294f9,
         type: 3}
       propertyPath: m_LocalRotation.z
-      value: -0
+      value: -0.7071068
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: 070701cd86a865849841ad5cdc5294f9,
         type: 3}
       propertyPath: m_LocalEulerAnglesHint.x
-      value: 0
+      value: -90
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: 070701cd86a865849841ad5cdc5294f9,
         type: 3}
@@ -16565,6 +16565,21 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: -7511558181221131132, guid: 070701cd86a865849841ad5cdc5294f9,
+        type: 3}
+      propertyPath: m_Materials.Array.data[0]
+      value: 
+      objectReference: {fileID: 2100000, guid: 02e3b9a513b77ba47a73b3e96697e261, type: 2}
+    - target: {fileID: -7511558181221131132, guid: 070701cd86a865849841ad5cdc5294f9,
+        type: 3}
+      propertyPath: m_Materials.Array.data[1]
+      value: 
+      objectReference: {fileID: 2100000, guid: 02e3b9a513b77ba47a73b3e96697e261, type: 2}
+    - target: {fileID: -7511558181221131132, guid: 070701cd86a865849841ad5cdc5294f9,
+        type: 3}
+      propertyPath: m_Materials.Array.data[2]
+      value: 
+      objectReference: {fileID: 2100000, guid: 070620920fd58584999b7479fd134d6f, type: 2}
     - target: {fileID: 919132149155446097, guid: 070701cd86a865849841ad5cdc5294f9,
         type: 3}
       propertyPath: m_Name
