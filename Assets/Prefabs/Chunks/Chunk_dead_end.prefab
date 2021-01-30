@@ -18175,6 +18175,12 @@ PrefabInstance:
       propertyPath: m_Name
       value: Asset_Ground_Deadend
       objectReference: {fileID: 0}
+    - target: {fileID: 3451118302482216456, guid: f729c981055d96d469ba167a02bdc458,
+        type: 3}
+      propertyPath: m_Material
+      value: 
+      objectReference: {fileID: 13400000, guid: 966ac8df2096274448bdfdc475324182,
+        type: 2}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: f729c981055d96d469ba167a02bdc458, type: 3}
 --- !u!4 &8665656557659601031 stripped

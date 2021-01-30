@@ -5,6 +5,7 @@ using UnityEngine;
 
 public class PlayerScript : MonoBehaviour
 {
+    AudioSource audioSource;
     public Camera PlayerCamera;//Player camera that we will comtrol
     public float MovementSpeed;//Speed that we will use to move the player
     public GameObject Body; //the body that we will rotate
@@ -17,19 +18,17 @@ public class PlayerScript : MonoBehaviour
     public Face PreviousDirection { get; private set; }
     public float directionAngle;
     public enum Face{Forward,Backward,Left,Right};
-    //public Rigidbody rb;//RigidBody of the player
-    public bool isHit;//Flag for if the enemy has hit the player
     public Animator AC;
     public float RotationSpeed;//Speed of the rotation for the turning
     private Vector3 GoalRotation;//Goal rotation that will be set to every update
     public float shootCooldown = 0.7f;
     bool canShoot = true;
+    public AudioClip shootSoundEffect;
 
     // Start is called before the first frame update
     void Start()
     {
-        //Set the Rotation to 0,0,0 for the start of the game
-
+        audioSource = GetComponent<AudioSource>();
     }
 
     // Update is called once per frame
@@ -119,6 +118,7 @@ public class PlayerScript : MonoBehaviour
             GameObject NewBullet = Instantiate(BulletPrefab, Barrel.transform.position, Barrel.transform.rotation);
             NewBullet.transform.eulerAngles = new Vector3(0, directionAngle, 0);
             NewBullet.GetComponent<ShootingScript>().fire(BulletSpeed);
+            audioSource.PlayOneShot(shootSoundEffect); // sound FX
 
             // Shooting cooldown
             canShoot = false;
@@ -166,13 +166,15 @@ public class PlayerScript : MonoBehaviour
             }*/
         }
     }
+
     public void OnControllerColliderHit(ControllerColliderHit hit)
     {
-        if (hit.gameObject.tag == "Enemy")
+        //if (hit.gameObject.tag == "Enemy")
+        if(hit.gameObject.name == "spider")
         {
             HitCount--;
-            isHit = true;
-            //GetComponent<CharacterController>().co
+            //take the RigidBody from teh enemy and apply the force of a less powerful shotgun
+            hit.gameObject.GetComponent<Rigidbody>().AddForce(transform.forward * BulletSpeed/2);
         }
     }
 
