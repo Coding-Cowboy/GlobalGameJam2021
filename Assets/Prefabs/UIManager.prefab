@@ -232,7 +232,7 @@ MonoBehaviour:
   deathOverlay: {fileID: 3570381783515044455}
   deathFadeSpeed: 2
   endgameOverlay: {fileID: 4901650555637837347}
-  endgameFadeSpeed: 6
+  endgameFadeSpeed: 0.05
 --- !u!82 &6007132370459164173
 AudioSource:
   m_ObjectHideFlags: 0

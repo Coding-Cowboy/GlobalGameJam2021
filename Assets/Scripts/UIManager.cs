@@ -27,7 +27,7 @@ public class UIManager : MonoBehaviour
     bool deathFading = false;
 
     public CanvasGroup endgameOverlay;
-    public float endgameFadeSpeed = 0.1f;
+    public float endgameFadeSpeed = 0.05f;
     bool endgameActive = false;
     bool endgameFading = false;
 
