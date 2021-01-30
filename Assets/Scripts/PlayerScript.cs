@@ -17,8 +17,6 @@ public class PlayerScript : MonoBehaviour
     public Face PreviousDirection { get; private set; }
     public float directionAngle;
     public enum Face{Forward,Backward,Left,Right};
-    //public Rigidbody rb;//RigidBody of the player
-    public bool isHit;//Flag for if the enemy has hit the player
     public Animator AC;
     public float RotationSpeed;//Speed of the rotation for the turning
     private Vector3 GoalRotation;//Goal rotation that will be set to every update
@@ -166,13 +164,15 @@ public class PlayerScript : MonoBehaviour
             }*/
         }
     }
+
     public void OnControllerColliderHit(ControllerColliderHit hit)
     {
-        if (hit.gameObject.tag == "Enemy")
+        //if (hit.gameObject.tag == "Enemy")
+        if(hit.gameObject.name == "spider")
         {
             HitCount--;
-            isHit = true;
-            //GetComponent<CharacterController>().co
+            //take the RigidBody from teh enemy and apply the force of a less powerful shotgun
+            hit.gameObject.GetComponent<Rigidbody>().AddForce(transform.forward * BulletSpeed/2);
         }
     }
 
