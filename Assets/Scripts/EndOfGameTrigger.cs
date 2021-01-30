@@ -4,10 +4,11 @@ using UnityEngine;
 
 public class EndOfGameTrigger : MonoBehaviour
 {
+    LevelManager lm;
     // Start is called before the first frame update
     void Start()
     {
-
+        lm = FindObjectOfType<LevelManager>();
     }
 
     // Update is called once per frame
@@ -18,10 +19,9 @@ public class EndOfGameTrigger : MonoBehaviour
 
     void OnTriggerEnter(Collider other)
     {
-        Debug.Log("Trigger enter");
         if (other.tag == "Player")
         {
-            Debug.Log("End of game sequence");
+            lm.CompleteLevel();
         }
     }
 }

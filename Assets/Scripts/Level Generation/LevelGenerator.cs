@@ -375,8 +375,6 @@ public class LevelGenerator : MonoBehaviour
 
         tiles[endRow][endCol].tileGameObject = UnityEngine.Object.Instantiate(goalPrefab, goalPosition, goalRotation);
 
-        Debug.Log("Player spawn tile: ");
-        Debug.Log(new Vector2(startRow, startCol));
         Vector3 playerPosition = new Vector3(startCol * gridSize, 0, startRow * gridSize);
         Vector3 spawnOffset = new Vector3(0.0f, 1.03f, 0.0f);
         player = UnityEngine.Object.Instantiate(playerPrefab, playerPosition + spawnOffset, new Quaternion());

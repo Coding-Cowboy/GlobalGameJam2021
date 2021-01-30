@@ -38,7 +38,7 @@ RenderSettings:
   m_ReflectionIntensity: 1
   m_CustomReflection: {fileID: 0}
   m_Sun: {fileID: 0}
-  m_IndirectSpecularColor: {r: 0.000088881534, g: 0.00008303259, b: 0.00014816468,
+  m_IndirectSpecularColor: {r: 0.00008896675, g: 0.00008311175, b: 0.00014411272,
     a: 1}
   m_UseRadianceAmbientProbe: 0
 --- !u!157 &3
@@ -270,6 +270,63 @@ PrefabInstance:
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 22060968df93a5d49949bc6e19263d4c, type: 3}
+--- !u!1 &503845251 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 934256737932372118, guid: 22060968df93a5d49949bc6e19263d4c,
+    type: 3}
+  m_PrefabInstance: {fileID: 503845250}
+  m_PrefabAsset: {fileID: 0}
+--- !u!1 &503845252 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 3820743022016282836, guid: 22060968df93a5d49949bc6e19263d4c,
+    type: 3}
+  m_PrefabInstance: {fileID: 503845250}
+  m_PrefabAsset: {fileID: 0}
+--- !u!1 &1208557014
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1208557016}
+  - component: {fileID: 1208557015}
+  m_Layer: 0
+  m_Name: LevelManager
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!114 &1208557015
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1208557014}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a7835f2c0c984ae4589322ef7ddb9f78, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  lightTheme: {fileID: 503845252}
+  darkTheme: {fileID: 503845251}
+--- !u!4 &1208557016
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1208557014}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 77.240364, y: -34.87248, z: 116.7968}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_RootOrder: 5
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1223453756
 GameObject:
   m_ObjectHideFlags: 0
