@@ -38,8 +38,7 @@ RenderSettings:
   m_ReflectionIntensity: 1
   m_CustomReflection: {fileID: 0}
   m_Sun: {fileID: 0}
-  m_IndirectSpecularColor: {r: 0.00008663402, g: 0.00008083164, b: 0.00014061538,
-    a: 1}
+  m_IndirectSpecularColor: {r: 0.00009174721, g: 0.00008602679, b: 0.0001489542, a: 1}
   m_UseRadianceAmbientProbe: 0
 --- !u!157 &3
 LightmapSettings:
@@ -564,7 +563,7 @@ MonoBehaviour:
   gridSize: 23.5
   rows: 7
   cols: 7
-  campFireSpawnChance: 1
+  campFireSpawnChance: 0.075
   playerPrefab: {fileID: 4618699986641551658, guid: 679b77e479bbfc3479465d8316598db5,
     type: 3}
   goalPrefab: {fileID: 9207646578867713205, guid: bbad1f55fb4ebdd43b03cc7ee5be88e1,
