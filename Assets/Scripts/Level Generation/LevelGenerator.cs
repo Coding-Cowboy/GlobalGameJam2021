@@ -1,19 +1,23 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
+using System;
 using UnityEngine;
 using UnityEngine.AI;
 
 public class LevelGenerator : MonoBehaviour
 {
-    public float gridSize = 20.5f / 7.0f; //2.92857142f
+    //public float maxSpawnTimer = 10;
+    //public float minSpawnTimer = 5;
+    public float gridSize = 23.5f;
     public int rows = 7, cols = 7;
+    //public GameObject[] enemyPrefabs;
     public GameObject playerPrefab;
     public GameObject goalPrefab;
-    public GameObject deadEnd;
-    public GameObject straight;
-    public GameObject turn;
-    public GameObject tee;
-    public GameObject cross;
+    public GameObject[] deadEnd;
+    public GameObject[] straight;
+    public GameObject[] turn;
+    public GameObject[] tee;
+    public GameObject[] cross;
 
     public bool debugMode = false;
     public GameObject debugDeadEnd;
@@ -27,6 +31,8 @@ public class LevelGenerator : MonoBehaviour
     private int startCol;
     private int endRow;
     private int endCol;
+    private GameObject player;
+    private float spawnTimer = 0;
 
     private class MazeTile
     {
@@ -66,7 +72,7 @@ public class LevelGenerator : MonoBehaviour
         ISet<System.Tuple<int, int>> squares = new HashSet<System.Tuple<int, int>>();
         ISet<System.Tuple<int, int, int>> candidateWalls = new HashSet<System.Tuple<int, int, int>>();
         System.Tuple<int, int> startSquare =
-            new System.Tuple<int, int>((int)Random.Range(0.0f, rows - 0.001f), (int)Random.Range(0.0f, cols - 0.001f));
+            new System.Tuple<int, int>((int)UnityEngine.Random.Range(0.0f, rows - 0.001f), (int)UnityEngine.Random.Range(0.0f, cols - 0.001f));
         if (startSquare.Item1 > 0)
             candidateWalls.Add(new System.Tuple<int, int, int>(0, startSquare.Item1 - 1, startSquare.Item2));
         if (startSquare.Item2 > 0)
@@ -77,7 +83,7 @@ public class LevelGenerator : MonoBehaviour
             candidateWalls.Add(new System.Tuple<int, int, int>(1, startSquare.Item1, startSquare.Item2));
         while (squares.Count < rows * cols)
         {
-            int k = (int)Random.Range(0.0f, candidateWalls.Count - 0.001f);
+            int k = (int)UnityEngine.Random.Range(0.0f, candidateWalls.Count - 0.001f);
             IEnumerator<System.Tuple<int, int, int>> e = candidateWalls.GetEnumerator();
             for (int i = 0; i <= k; i++) e.MoveNext();
             System.Tuple<int, int, int> currentWall = e.Current;
@@ -104,26 +110,6 @@ public class LevelGenerator : MonoBehaviour
             candidateWalls.Remove(currentWall);
         }
         return walls;
-    }
-
-    public GameObject CreateHorizontalWall(int row, int startcol, int endcol)
-    {
-        float squareSizeX = 20.5f / cols;
-        float squareSizeZ = 20.5f / rows;
-        GameObject wall = GameObject.CreatePrimitive(PrimitiveType.Cube);
-        wall.transform.localScale = new Vector3((endcol - startcol) * squareSizeX + 0.5f, 2.0f, 0.5f);
-        wall.transform.position = new Vector3((endcol + startcol) / 2.0f * squareSizeX - 1.5f, 1.0f, (row + 1) * squareSizeZ - 1.5f);
-        return wall;
-    }
-
-    public GameObject CreateVerticalWall(int col, int startrow, int endrow)
-    {
-        float squareSizeX = 20.5f / cols;
-        float squareSizeZ = 20.5f / rows;
-        GameObject wall = GameObject.CreatePrimitive(PrimitiveType.Cube);
-        wall.transform.localScale = new Vector3(0.5f, 2.0f, (endrow - startrow) * squareSizeZ + 0.5f);
-        wall.transform.position = new Vector3((col + 1) * squareSizeX - 1.5f, 1.0f, (endrow + startrow) / 2.0f * squareSizeZ - 1.5f);
-        return wall;
     }
 
     // Start is called before the first frame update
@@ -182,7 +168,7 @@ public class LevelGenerator : MonoBehaviour
                 {
                     case 1:
                         //dead end
-                        spawnedPiece = Object.Instantiate(deadEnd, new Vector3(j * gridSize, 0, i * gridSize), new Quaternion());
+                        spawnedPiece = UnityEngine.Object.Instantiate(deadEnd[UnityEngine.Random.Range(0, deadEnd.Length)], new Vector3(j * gridSize, 0, i * gridSize), new Quaternion());
                         if (left)
                         {
                             spawnedPiece.transform.Rotate(new Vector3(0, 90.0f, 0));
@@ -206,37 +192,37 @@ public class LevelGenerator : MonoBehaviour
                         spawnedPiece = null;
                         if (left && right)
                         {
-                            spawnedPiece = Object.Instantiate(straight, new Vector3(j * gridSize, 0, i * gridSize), new Quaternion());
+                            spawnedPiece = UnityEngine.Object.Instantiate(straight[UnityEngine.Random.Range(0, straight.Length)], new Vector3(j * gridSize, 0, i * gridSize), new Quaternion());
                             spawnedPiece.transform.Rotate(new Vector3(0, 90.0f, 0));
                         }
                         else if (up && down)
                         {
-                            spawnedPiece = Object.Instantiate(straight, new Vector3(j * gridSize, 0, i * gridSize), new Quaternion());
+                            spawnedPiece = UnityEngine.Object.Instantiate(straight[UnityEngine.Random.Range(0, straight.Length)], new Vector3(j * gridSize, 0, i * gridSize), new Quaternion());
                         }
                         //turn
                         else if (left && up)
                         {
-                            spawnedPiece = Object.Instantiate(turn, new Vector3(j * gridSize, 0, i * gridSize), new Quaternion());
+                            spawnedPiece = UnityEngine.Object.Instantiate(turn[UnityEngine.Random.Range(0, turn.Length)], new Vector3(j * gridSize, 0, i * gridSize), new Quaternion());
                             spawnedPiece.transform.Rotate(new Vector3(0, 90.0f, 0));
                         }
                         else if (up && right)
                         {
-                            spawnedPiece = Object.Instantiate(turn, new Vector3(j * gridSize, 0, i * gridSize), new Quaternion());
+                            spawnedPiece = UnityEngine.Object.Instantiate(turn[UnityEngine.Random.Range(0, turn.Length)], new Vector3(j * gridSize, 0, i * gridSize), new Quaternion());
                             spawnedPiece.transform.Rotate(new Vector3(0, 180.0f, 0));
                         }
                         else if (right && down)
                         {
-                            spawnedPiece = Object.Instantiate(turn, new Vector3(j * gridSize, 0, i * gridSize), new Quaternion());
+                            spawnedPiece = UnityEngine.Object.Instantiate(turn[UnityEngine.Random.Range(0, turn.Length)], new Vector3(j * gridSize, 0, i * gridSize), new Quaternion());
                             spawnedPiece.transform.Rotate(new Vector3(0, 270.0f, 0));
                         }
                         else if (down && left)
                         {
-                            spawnedPiece = Object.Instantiate(turn, new Vector3(j * gridSize, 0, i * gridSize), new Quaternion());
+                            spawnedPiece = UnityEngine.Object.Instantiate(turn[UnityEngine.Random.Range(0, turn.Length)], new Vector3(j * gridSize, 0, i * gridSize), new Quaternion());
                         }
                         tiles[i][j].tileGameObject = spawnedPiece;
                         break;
                     case 3:
-                        spawnedPiece = Object.Instantiate(tee, new Vector3(j * gridSize, 0, i * gridSize), new Quaternion());
+                        spawnedPiece = UnityEngine.Object.Instantiate(tee[UnityEngine.Random.Range(0, tee.Length)], new Vector3(j * gridSize, 0, i * gridSize), new Quaternion());
                         //tee
                         if (down && left && up)
                         {
@@ -258,7 +244,7 @@ public class LevelGenerator : MonoBehaviour
                         break;
                     case 4:
                         //cross
-                        spawnedPiece = Object.Instantiate(cross, new Vector3(j * gridSize, 0, i * gridSize), new Quaternion());
+                        spawnedPiece = UnityEngine.Object.Instantiate(cross[UnityEngine.Random.Range(0, cross.Length)], new Vector3(j * gridSize, 0, i * gridSize), new Quaternion());
                         tiles[i][j].tileGameObject = spawnedPiece;
                         break;
                     default:
@@ -273,7 +259,7 @@ public class LevelGenerator : MonoBehaviour
                     {
                         case 1:
                             //dead end
-                            spawnedPiece = Object.Instantiate(debugDeadEnd, new Vector3(j * debugGridSize, 15, i * debugGridSize), new Quaternion());
+                            spawnedPiece = UnityEngine.Object.Instantiate(debugDeadEnd, new Vector3(j * debugGridSize, 15, i * debugGridSize), new Quaternion());
                             if (left)
                             {
                                 spawnedPiece.transform.Rotate(new Vector3(0, 90.0f, 0));
@@ -295,59 +281,59 @@ public class LevelGenerator : MonoBehaviour
                             //straight
                             if (left && right)
                             {
-                                spawnedPiece = Object.Instantiate(debugStraight, new Vector3(j * debugGridSize, 15, i * debugGridSize), new Quaternion());
+                                spawnedPiece = UnityEngine.Object.Instantiate(debugStraight, new Vector3(j * debugGridSize, 15, i * debugGridSize), new Quaternion());
                                 spawnedPiece.transform.Rotate(new Vector3(0, 90.0f, 0));
                             }
                             else if (up && down)
                             {
-                                spawnedPiece = Object.Instantiate(debugStraight, new Vector3(j * debugGridSize, 15, i * debugGridSize), new Quaternion());
+                                spawnedPiece = UnityEngine.Object.Instantiate(debugStraight, new Vector3(j * debugGridSize, 15, i * debugGridSize), new Quaternion());
                             }
                             //turn
                             else if (left && up)
                             {
-                                spawnedPiece = Object.Instantiate(debugTurn, new Vector3(j * debugGridSize, 15, i * debugGridSize), new Quaternion());
+                                spawnedPiece = UnityEngine.Object.Instantiate(debugTurn, new Vector3(j * debugGridSize, 15, i * debugGridSize), new Quaternion());
                                 spawnedPiece.transform.Rotate(new Vector3(0, 90.0f, 0));
                             }
                             else if (up && right)
                             {
-                                spawnedPiece = Object.Instantiate(debugTurn, new Vector3(j * debugGridSize, 15, i * debugGridSize), new Quaternion());
+                                spawnedPiece = UnityEngine.Object.Instantiate(debugTurn, new Vector3(j * debugGridSize, 15, i * debugGridSize), new Quaternion());
                                 spawnedPiece.transform.Rotate(new Vector3(0, 180.0f, 0));
                             }
                             else if (right && down)
                             {
-                                spawnedPiece = Object.Instantiate(debugTurn, new Vector3(j * debugGridSize, 15, i * debugGridSize), new Quaternion());
+                                spawnedPiece = UnityEngine.Object.Instantiate(debugTurn, new Vector3(j * debugGridSize, 15, i * debugGridSize), new Quaternion());
                                 spawnedPiece.transform.Rotate(new Vector3(0, 270.0f, 0));
                             }
                             else if (down && left)
                             {
-                                spawnedPiece = Object.Instantiate(debugTurn, new Vector3(j * debugGridSize, 15, i * debugGridSize), new Quaternion());
+                                spawnedPiece = UnityEngine.Object.Instantiate(debugTurn, new Vector3(j * debugGridSize, 15, i * debugGridSize), new Quaternion());
                             }
                             break;
                         case 3:
                             //tee
                             if (down && left && up)
                             {
-                                spawnedPiece = Object.Instantiate(debugTee, new Vector3(j * debugGridSize, 15, i * debugGridSize), new Quaternion());
+                                spawnedPiece = UnityEngine.Object.Instantiate(debugTee, new Vector3(j * debugGridSize, 15, i * debugGridSize), new Quaternion());
                                 spawnedPiece.transform.Rotate(new Vector3(0, 90.0f, 0));
                             }
                             else if (left && up && right)
                             {
-                                spawnedPiece = Object.Instantiate(debugTee, new Vector3(j * debugGridSize, 15, i * debugGridSize), new Quaternion());
+                                spawnedPiece = UnityEngine.Object.Instantiate(debugTee, new Vector3(j * debugGridSize, 15, i * debugGridSize), new Quaternion());
                                 spawnedPiece.transform.Rotate(new Vector3(0, 180.0f, 0));
                             }
                             else if (up && right && down)
                             {
-                                spawnedPiece = Object.Instantiate(debugTee, new Vector3(j * debugGridSize, 15, i * debugGridSize), new Quaternion());
+                                spawnedPiece = UnityEngine.Object.Instantiate(debugTee, new Vector3(j * debugGridSize, 15, i * debugGridSize), new Quaternion());
                                 spawnedPiece.transform.Rotate(new Vector3(0, 270.0f, 0));
                             }
                             else if (right && down && left)
                             {
-                                spawnedPiece = Object.Instantiate(debugTee, new Vector3(j * debugGridSize, 15, i * debugGridSize), new Quaternion());
+                                spawnedPiece = UnityEngine.Object.Instantiate(debugTee, new Vector3(j * debugGridSize, 15, i * debugGridSize), new Quaternion());
                             }
                             break;
                         case 4:
                             //cross
-                            spawnedPiece = Object.Instantiate(debugCross, new Vector3(j * debugGridSize, 15, i * debugGridSize), new Quaternion());
+                            spawnedPiece = UnityEngine.Object.Instantiate(debugCross, new Vector3(j * debugGridSize, 15, i * debugGridSize), new Quaternion());
                             break;
                         default:
                             Debug.Log(numOutlets);
@@ -359,8 +345,8 @@ public class LevelGenerator : MonoBehaviour
 
         //generate the start and end
         //make sure that they are a certain manhattan distance apart
-        endRow = Random.Range(0, rows - 1);
-        endCol = Random.Range(0, cols - 1);
+        endRow = UnityEngine.Random.Range(0, rows - 1);
+        endCol = UnityEngine.Random.Range(0, cols - 1);
         while (
                 (tiles[endRow][endCol].left == true ? 1 : 0) +
                 (tiles[endRow][endCol].up == true ? 1 : 0) +
@@ -369,17 +355,17 @@ public class LevelGenerator : MonoBehaviour
                 != 1
             )
         {
-            endRow = Random.Range(0, rows - 1);
-            endCol = Random.Range(0, cols - 1);
+            endRow = UnityEngine.Random.Range(0, rows - 1);
+            endCol = UnityEngine.Random.Range(0, cols - 1);
         }
         Debug.Log("End Row: " + endRow + "End Col" + endCol);
 
-        startRow = Random.Range(0, rows - 1);
-        startCol = Random.Range(0, cols - 1);
+        startRow = UnityEngine.Random.Range(0, rows - 1);
+        startCol = UnityEngine.Random.Range(0, cols - 1);
         while (calcManhattanDistance(startRow, startCol, endRow, endCol) < minCompletionDistance)
         {
-            startRow = Random.Range(0, rows - 1);
-            startCol = Random.Range(0, cols - 1);
+            startRow = UnityEngine.Random.Range(0, rows - 1);
+            startCol = UnityEngine.Random.Range(0, cols - 1);
         }
         Debug.Log("Start Row: " + startRow + "Start Col" + startCol);
 
@@ -387,12 +373,169 @@ public class LevelGenerator : MonoBehaviour
         Quaternion goalRotation = tiles[endRow][endCol].tileGameObject.transform.rotation;
         Destroy(tiles[endRow][endCol].tileGameObject);
 
-        tiles[endRow][endCol].tileGameObject = Object.Instantiate(goalPrefab, goalPosition, goalRotation);
+        tiles[endRow][endCol].tileGameObject = UnityEngine.Object.Instantiate(goalPrefab, goalPosition, goalRotation);
 
+        Debug.Log("Player spawn tile: ");
+        Debug.Log(new Vector2(startRow, startCol));
         Vector3 playerPosition = new Vector3(startCol * gridSize, 0, startRow * gridSize);
         Vector3 spawnOffset = new Vector3(0.0f, 1.03f, 0.0f);
-        Object.Instantiate(playerPrefab, playerPosition + spawnOffset, new Quaternion());
+        player = UnityEngine.Object.Instantiate(playerPrefab, playerPosition + spawnOffset, new Quaternion());
+
+        // for (int i = 0; i < tiles.Length; i++)
+        // {
+        //     Debug.Log("Tile: " + i + " " + "Up: " + tiles[3][i].up + " " + "Down: " + tiles[3][i].down);
+        // }
+
+        // for (int i = 0; i < tiles.Length; i++)
+        // {
+        //     Debug.Log("Tile: " + i + " " + "Right: " + tiles[i][3].right + " " + "Left: " + tiles[i][3].left);
+        // }
     }
+
+    // void Update()
+    // {
+    //     bool canSpawn = false;
+    //     spawnTimer -= Time.deltaTime;
+    //     if (spawnTimer <= 0)
+    //     {
+    //         canSpawn = true;
+    //         //reset the timer
+    //         spawnTimer = UnityEngine.Random.Range(minSpawnTimer, maxSpawnTimer);
+    //         spawnTimer = 1000000.0f;
+    //     }
+
+
+    //     if (canSpawn)
+    //     {
+    //         //calculate the tile that the player is currently on
+    //         //find the min distance in the list of tiles
+    //         int closestTileRow = 0;
+    //         int closestTileCol = 0;
+    //         float closestDistance = (tiles[0][0].tileGameObject.transform.position - player.transform.position).magnitude;
+    //         for (int i = 0; i < tiles.Length; i++)
+    //         {
+    //             for (int j = 0; j < tiles[i].Length; j++)
+    //             {
+    //                 float newDistance = (tiles[i][j].tileGameObject.transform.position - player.transform.position).magnitude;
+    //                 if (newDistance < closestDistance)
+    //                 {
+    //                     closestDistance = newDistance;
+    //                     closestTileRow = i;
+    //                     closestTileCol = j;
+    //                 }
+    //             }
+    //         }
+
+    //         //travel out 2 tiles from the current tile in a random direction, and spawn
+    //         int travelDistance = 2;
+    //         int searchSize = travelDistance * 2 + 1;
+    //         int midPoint = travelDistance + 1;
+    //         bool continueSearching = true;
+    //         bool spawnSuccess = false;
+
+    //         bool[][] visitedTiles = new bool[searchSize][];
+    //         for (int k = 0; k < searchSize; k++)
+    //         {
+    //             visitedTiles[k] = new bool[searchSize];
+    //         }
+
+    //         visitedTiles[midPoint][midPoint] = true;
+
+    //         int rowOffset = 0;
+    //         int colOffset = 0;
+    //         Stack<Tuple<int, int>> traverseHistory = new Stack<Tuple<int, int>>();
+    //         List<Tuple<int, int>> directionOptions = new List<Tuple<int, int>>();
+
+    //         while (continueSearching)
+    //         {
+    //             //add all possible directions to a list
+    //             if (rowOffset < travelDistance)
+    //             {
+    //                 if (tiles[closestTileRow + rowOffset][closestTileCol + colOffset].up && !visitedTiles[midPoint + rowOffset + 1][midPoint + colOffset])
+    //                 {
+    //                     directionOptions.Add(new Tuple<int, int>(1, 0));
+    //                 }
+    //             }
+
+    //             if (rowOffset > -travelDistance)
+    //             {
+    //                 if (tiles[closestTileRow + rowOffset][closestTileCol + colOffset].down && !visitedTiles[midPoint + rowOffset - 1][midPoint + colOffset])
+    //                 {
+    //                     directionOptions.Add(new Tuple<int, int>(-1, 0));
+    //                 }
+    //             }
+
+    //             if (colOffset < travelDistance)
+    //             {
+    //                 if (tiles[closestTileRow + rowOffset][closestTileCol + colOffset].right && !visitedTiles[midPoint + rowOffset][midPoint + colOffset + 1])
+    //                 {
+    //                     directionOptions.Add(new Tuple<int, int>(0, 1));
+    //                 }
+    //             }
+
+    //             if (colOffset > -travelDistance)
+    //             {
+    //                 if (tiles[closestTileRow + rowOffset][closestTileCol + colOffset].left && !visitedTiles[midPoint + rowOffset][midPoint + colOffset - 1])
+    //                 {
+    //                     directionOptions.Add(new Tuple<int, int>(0, -1));
+    //                 }
+    //             }
+
+
+    //             //if there are no possible directions to go in, then backtrack
+    //             if (directionOptions.Count == 0)
+    //             {
+    //                 //if there are no items to backtrack to, then exit (failure)
+    //                 if (traverseHistory.Count == 0)
+    //                 {
+    //                     continueSearching = false;
+    //                     spawnSuccess = false;
+    //                 }
+    //                 //otherwise pop an item to backtrack to
+    //                 else
+    //                 {
+    //                     Tuple<int, int> backtrackDirection = traverseHistory.Pop();
+
+    //                     rowOffset -= backtrackDirection.Item1;
+    //                     colOffset -= backtrackDirection.Item2;
+    //                 }
+    //             }
+    //             //otherwise search in a random direction
+    //             else
+    //             {
+    //                 //pick a random direction to go in
+    //                 int randomIndex = UnityEngine.Random.Range(0, directionOptions.Count - 1);
+
+    //                 //go in that direction
+    //                 traverseHistory.Push(new Tuple<int, int>(directionOptions[randomIndex].Item1, directionOptions[randomIndex].Item2));
+    //                 rowOffset += directionOptions[randomIndex].Item1;
+    //                 colOffset += directionOptions[randomIndex].Item2;
+    //                 visitedTiles[rowOffset][colOffset] = true;
+
+    //                 //if the selected tile is travelDistance distance away from the midpoint (AKA origin of the search), then exit (success)
+    //                 if (Mathf.Abs(rowOffset) + Mathf.Abs(colOffset) >= travelDistance)
+    //                 {
+    //                     continueSearching = false;
+    //                     spawnSuccess = true;
+    //                 }
+    //             }
+    //         }
+
+    //         //if a place was found to spawn the enemy, then spawn it
+    //         if (spawnSuccess)
+    //         {
+    //             Debug.Log("Closest Tile: ");
+    //             Debug.Log(new Vector2(closestTileRow, closestTileCol));
+    //             float spawnRadius = 10.0f;
+    //             //spawn the enemy
+    //             Vector3 spawnLocation = new Vector3((closestTileCol + colOffset) * gridSize, 0, (closestTileRow + rowOffset) * gridSize);
+    //             Vector3 spawnLocationOffset = new Vector3(UnityEngine.Random.Range(0, spawnRadius), 1.0f, UnityEngine.Random.Range(0, spawnRadius));
+
+    //             int enemyChoice = UnityEngine.Random.Range(0, enemyPrefabs.Length - 1);
+    //             UnityEngine.Object.Instantiate(enemyPrefabs[enemyChoice], spawnLocation /*+ spawnLocationOffset*/, new Quaternion());
+    //         }
+    //     }
+    // }
 
     private int calcManhattanDistance(int x1, int y1, int x2, int y2)
     {
