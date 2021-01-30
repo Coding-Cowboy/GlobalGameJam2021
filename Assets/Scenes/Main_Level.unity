@@ -38,7 +38,7 @@ RenderSettings:
   m_ReflectionIntensity: 1
   m_CustomReflection: {fileID: 0}
   m_Sun: {fileID: 0}
-  m_IndirectSpecularColor: {r: 0.000111106165, g: 0.00010377013, b: 0.000185131, a: 1}
+  m_IndirectSpecularColor: {r: 0, g: 0, b: 0, a: 1}
   m_UseRadianceAmbientProbe: 0
 --- !u!157 &3
 LightmapSettings:
@@ -367,7 +367,7 @@ MonoBehaviour:
   gridSize: 23.5
   rows: 7
   cols: 7
-  playerPrefab: {fileID: 2637831632140888122, guid: 679b77e479bbfc3479465d8316598db5,
+  playerPrefab: {fileID: 4618699986641551658, guid: 85cea9d1ae45eed48b8b3ed1703667fc,
     type: 3}
   goalPrefab: {fileID: 9207646578867713205, guid: bbad1f55fb4ebdd43b03cc7ee5be88e1,
     type: 3}

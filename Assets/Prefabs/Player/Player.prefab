@@ -520,6 +520,51 @@ PrefabInstance:
       propertyPath: m_Layer
       value: 11
       objectReference: {fileID: 0}
+    - target: {fileID: 5933118664504089387, guid: ce907acad8231ea4ca9dfb10674c5ce6,
+        type: 3}
+      propertyPath: m_Intensity
+      value: 2272.6318
+      objectReference: {fileID: 0}
+    - target: {fileID: 5933118664504089396, guid: ce907acad8231ea4ca9dfb10674c5ce6,
+        type: 3}
+      propertyPath: m_Intensity
+      value: 5.85
+      objectReference: {fileID: 0}
+    - target: {fileID: 5933118664504089396, guid: ce907acad8231ea4ca9dfb10674c5ce6,
+        type: 3}
+      propertyPath: m_InnerSpotPercent
+      value: 27.32963
+      objectReference: {fileID: 0}
+    - target: {fileID: 5933118664504089396, guid: ce907acad8231ea4ca9dfb10674c5ce6,
+        type: 3}
+      propertyPath: m_CustomSpotLightShadowCone
+      value: 29.9
+      objectReference: {fileID: 0}
+    - target: {fileID: 5933118664504089397, guid: ce907acad8231ea4ca9dfb10674c5ce6,
+        type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 0.7071068
+      objectReference: {fileID: 0}
+    - target: {fileID: 5933118664504089397, guid: ce907acad8231ea4ca9dfb10674c5ce6,
+        type: 3}
+      propertyPath: m_LocalRotation.x
+      value: 0.7071068
+      objectReference: {fileID: 0}
+    - target: {fileID: 5933118664504089397, guid: ce907acad8231ea4ca9dfb10674c5ce6,
+        type: 3}
+      propertyPath: m_LocalRotation.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5933118664504089397, guid: ce907acad8231ea4ca9dfb10674c5ce6,
+        type: 3}
+      propertyPath: m_LocalRotation.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5933118664504089397, guid: ce907acad8231ea4ca9dfb10674c5ce6,
+        type: 3}
+      propertyPath: m_LocalEulerAnglesHint.x
+      value: 90
+      objectReference: {fileID: 0}
     - target: {fileID: 5933118664504089398, guid: ce907acad8231ea4ca9dfb10674c5ce6,
         type: 3}
       propertyPath: m_Layer
@@ -529,6 +574,11 @@ PrefabInstance:
         type: 3}
       propertyPath: m_Layer
       value: 11
+      objectReference: {fileID: 0}
+    - target: {fileID: 5933118666141564379, guid: ce907acad8231ea4ca9dfb10674c5ce6,
+        type: 3}
+      propertyPath: m_Intensity
+      value: 4.774648
       objectReference: {fileID: 0}
     - target: {fileID: 5933118666141564390, guid: ce907acad8231ea4ca9dfb10674c5ce6,
         type: 3}
