@@ -618,13 +618,13 @@ MonoBehaviour:
   BulletSpeed: 300
   HitCount: 3
   isHit: 0
-  timer: 2.5
+  hitTimer: 1.5
   directionAngle: 0
   AC: {fileID: 460110861540821207}
   RotationSpeed: 7
   shootCooldown: 0.7
   shootSoundEffect: {fileID: 8300000, guid: 8da59d8ba252780418e8f2363e7dff99, type: 3}
-  heartManager: {fileID: 0}
+  shootSoundVolume: 1
 --- !u!143 &1116647569603246524
 CharacterController:
   m_ObjectHideFlags: 0
@@ -680,7 +680,7 @@ AudioSource:
   MinDistance: 1
   MaxDistance: 500
   Pan2D: 0
-  rolloffMode: 0
+  rolloffMode: 1
   BypassEffects: 0
   BypassListenerEffects: 0
   BypassReverbZones: 0
