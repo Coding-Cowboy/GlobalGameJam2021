@@ -15,7 +15,7 @@ public class PlayerScript : MonoBehaviour
     public float BulletSpeed;//Speed of the bullets
     public int HitCount;//The amount of times that a player can be hit.
     public bool isHit;
-    public float timer =2.5f;
+    public float hitTimer = 1.5f;
     public Face DirectionFacing { get; private set; }//The state of the direction that the player is facing
     public Face PreviousDirection { get; private set; }
     public float directionAngle;
@@ -27,6 +27,7 @@ public class PlayerScript : MonoBehaviour
     public float shootCooldown = 0.7f;
     bool canShoot = true;
     public AudioClip shootSoundEffect;
+    public HeartManager heartManager;
 
     // Start is called before the first frame update
     void Start()
@@ -43,6 +44,8 @@ public class PlayerScript : MonoBehaviour
         turn();
         if(isHit)
             HitCheck();
+
+        heartManager.UpdateHealth(HitCount);
     }
 
     private void EndGame()
@@ -54,10 +57,10 @@ public class PlayerScript : MonoBehaviour
     }
     public void HitCheck()
     {
-        timer -= Time.deltaTime;
-        if(timer < 0)
+        hitTimer -= Time.deltaTime;
+        if(hitTimer < 0)
         {
-            timer = 2.5f;
+            hitTimer = 1.5f;
             isHit = false;
         }
     }

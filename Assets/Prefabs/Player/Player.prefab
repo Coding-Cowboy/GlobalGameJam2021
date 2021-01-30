@@ -624,6 +624,7 @@ MonoBehaviour:
   RotationSpeed: 7
   shootCooldown: 0.7
   shootSoundEffect: {fileID: 8300000, guid: 8da59d8ba252780418e8f2363e7dff99, type: 3}
+  heartManager: {fileID: 0}
 --- !u!143 &1116647569603246524
 CharacterController:
   m_ObjectHideFlags: 0
