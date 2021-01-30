@@ -14,6 +14,10 @@ public class EnemyScript : MonoBehaviour
     void Start()
     {
         body = GetComponent<Rigidbody>();
+
+        // Find spawned player
+        if (player == null)
+            player = GameObject.FindGameObjectWithTag("Player");
     }
 
     private void FixedUpdate()
