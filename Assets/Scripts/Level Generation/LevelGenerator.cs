@@ -8,10 +8,12 @@ public class LevelGenerator : MonoBehaviour
 {
     //public float maxSpawnTimer = 10;
     //public float minSpawnTimer = 5;
+    //public GameObject[] enemyPrefabs;
     public float gridSize = 23.5f;
     public int rows = 7, cols = 7;
     public float campFireSpawnChance = 0.15f;
-    //public GameObject[] enemyPrefabs;
+    public float landmarkSpawnChance = 0.15f;
+    public float pickupSpawnChance = 0.15f;
     public GameObject playerPrefab;
     public GameObject goalPrefab;
     public GameObject[] deadEnd;
@@ -159,6 +161,18 @@ public class LevelGenerator : MonoBehaviour
                     CampfireSpawner spawner = spawnedPiece.GetComponent<CampfireSpawner>();
                     if (spawner != null)
                         spawner.SpawnCampfire();
+                }
+                if (UnityEngine.Random.Range(0.0f, 1.0f) <= landmarkSpawnChance)
+                {
+                    LandmarkSpawner spawner = spawnedPiece.GetComponent<LandmarkSpawner>();
+                    if (spawner != null)
+                        spawner.SpawnLandmark();
+                }
+                if (UnityEngine.Random.Range(0.0f, 1.0f) <= pickupSpawnChance)
+                {
+                    PickupSpawner spawner = spawnedPiece.GetComponent<PickupSpawner>();
+                    if (spawner != null)
+                        spawner.SpawnPickup();
                 }
 
                 if (debugMode == true)
