@@ -8,7 +8,8 @@ public class ShootingScript : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        
+        // Auto despawn
+        Invoke("Expire", 1.5f);
     }
 
     // Update is called once per frame
@@ -16,6 +17,24 @@ public class ShootingScript : MonoBehaviour
     {
 
     }
+
+    public void fire(float Force)
+    {
+        float spawnSpread = 0.06f;
+        float angleSpread = 0.2f;
+
+        // Spawn with slight offset
+        Vector3 spawnOffset = transform.right * spawnSpread;
+        GameObject Child1 = Instantiate(gameObject, (transform.position + spawnOffset), transform.rotation);
+        GameObject Child2 = Instantiate(gameObject, (transform.position - spawnOffset), transform.rotation);
+
+        // Rotate and add force
+        Vector3 angleOffset = transform.right * angleSpread;
+        GetComponent<Rigidbody>().AddForce(transform.forward * Force);
+        Child1.GetComponent<Rigidbody>().AddForce((transform.forward + angleOffset) * Force);
+        Child2.GetComponent<Rigidbody>().AddForce((transform.forward - angleOffset) * Force);
+    }
+
     public void fire(string side, float Force)
     {
         //Add to the Rotation
@@ -27,6 +46,7 @@ public class ShootingScript : MonoBehaviour
         GetComponent<Rigidbody>().AddForce(transform.forward * Force);
         split(Force);
     }
+
     //Call once to create 3 bullets
     public void split(float Force)
     {
@@ -94,5 +114,11 @@ public class ShootingScript : MonoBehaviour
         }
         if (hit.gameObject.tag != "Player")
             Destroy(gameObject);//destroy self regardless
+    }
+
+    void Expire()
+    {
+        // Projectile dies automatically
+        Destroy(gameObject);
     }
 }

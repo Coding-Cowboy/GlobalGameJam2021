@@ -15,6 +15,7 @@ public class PlayerScript : MonoBehaviour
     public int HitCount;//The amount of times that a player can be hit.
     public Face DirectionFacing { get; private set; }//The state of the direction that the player is facing
     public Face PreviousDirection { get; private set; }
+    public float directionAngle;
     public enum Face{Forward,Backward,Left,Right};
     //public Rigidbody rb;//RigidBody of the player
     public bool isHit;//Flag for if the enemy has hit the player
@@ -51,7 +52,35 @@ public class PlayerScript : MonoBehaviour
         bool isMoving = false;
         //Get the current position for the key inputs
         Vector3 Position = gameObject.transform.position;
-        if (Input.GetKey("w") || Input.GetKey("up"))
+
+        float hInput = Input.GetAxisRaw("Horizontal");
+        float vInput = Input.GetAxisRaw("Vertical");
+        if (Mathf.Abs(hInput) > 0.3f || Mathf.Abs(vInput) > 0.3f)
+        {
+            isMoving = true;
+            Position.x += hInput * MovementSpeed * Time.deltaTime;
+            Position.z += vInput * MovementSpeed * Time.deltaTime;
+            directionAngle = Vector3.SignedAngle(Vector3.forward, new Vector3(hInput, 0, vInput).normalized, Vector3.up);
+            GoalRotation = new Vector3(0, directionAngle, 0);
+        }
+
+        /*if (Input.GetAxisRaw("Horizontal") < -0.4f)
+        {
+            PreviousDirection = DirectionFacing;
+            Position.x -= MovementSpeed * Time.deltaTime;
+            GoalRotation = new Vector3(0, 270, 0);
+            DirectionFacing = Face.Left;
+            isMoving = true;
+        }
+        if (Input.GetAxisRaw("Horizontal") > 0.4f)
+        {
+            PreviousDirection = DirectionFacing;
+            Position.x += MovementSpeed * Time.deltaTime;
+            GoalRotation = new Vector3(0, 90, 0);
+            DirectionFacing = Face.Right;
+            isMoving = true;
+        }
+        if (Input.GetAxisRaw("Vertical") > 0.4f)
         {
             PreviousDirection = DirectionFacing;
             Position.z += MovementSpeed * Time.deltaTime;
@@ -60,33 +89,14 @@ public class PlayerScript : MonoBehaviour
             DirectionFacing = Face.Forward;
             isMoving = true;
         }
-        if (Input.GetKey("s") || Input.GetKey("down"))
+        if (Input.GetAxisRaw("Vertical") < -0.4f)
         {
             PreviousDirection = DirectionFacing;
             Position.z -= MovementSpeed * Time.deltaTime;
             GoalRotation = new Vector3(0, -180, 0);
             DirectionFacing = Face.Backward;
             isMoving = true;
-
-        }
-        if (Input.GetKey("a") || Input.GetKey("left"))
-        {
-            PreviousDirection = DirectionFacing;
-            Position.x -= MovementSpeed * Time.deltaTime;
-            GoalRotation = new Vector3(0, 270, 0);
-            DirectionFacing = Face.Left;
-            isMoving = true;
-
-        }
-        if (Input.GetKey("d") || Input.GetKey("right"))
-        {
-            PreviousDirection = DirectionFacing;
-            Position.x += MovementSpeed * Time.deltaTime;
-            GoalRotation = new Vector3(0, 90, 0);
-            DirectionFacing = Face.Right;
-            isMoving = true;
-
-        }
+        }*/
 
         AC.SetBool("IsMoving", isMoving);
         //Check for if both w and a are pressed for rotation
@@ -101,10 +111,14 @@ public class PlayerScript : MonoBehaviour
     }
     private void FireInputs()
     {
-        if (Input.GetKeyDown(KeyCode.Space) || Input.GetKeyDown(KeyCode.Return))
+        // Jump includes space, Z, and joystick button
+        if (Input.GetButtonDown("Jump"))
         {
-            GameObject NewBullet = Instantiate(BulletPrefab, Barrel.transform.position,Barrel.transform.rotation);
-            switch(DirectionFacing)
+            GameObject NewBullet = Instantiate(BulletPrefab, Barrel.transform.position, Barrel.transform.rotation);
+            NewBullet.transform.eulerAngles = new Vector3(0, directionAngle, 0);
+            NewBullet.GetComponent<ShootingScript>().fire(BulletSpeed);
+
+            /*switch(DirectionFacing)
             {
                 case Face.Forward:
                         //Create the bullet for element i
@@ -143,7 +157,7 @@ public class PlayerScript : MonoBehaviour
                         NewBullet.GetComponent<ShootingScript>().fire("Right", BulletSpeed);
                     }
                     break;
-            }
+            }*/
         }
     }
     public void OnControllerColliderHit(ControllerColliderHit hit)

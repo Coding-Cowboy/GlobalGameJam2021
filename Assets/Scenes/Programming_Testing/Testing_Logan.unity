@@ -121,12 +121,6 @@ NavMeshSettings:
     debug:
       m_Flags: 0
   m_NavMeshData: {fileID: 0}
---- !u!1 &96218791 stripped
-GameObject:
-  m_CorrespondingSourceObject: {fileID: 2637831632140888122, guid: 679b77e479bbfc3479465d8316598db5,
-    type: 3}
-  m_PrefabInstance: {fileID: 949802465}
-  m_PrefabAsset: {fileID: 0}
 --- !u!1 &314645150
 GameObject:
   m_ObjectHideFlags: 0
@@ -596,6 +590,21 @@ PrefabInstance:
       propertyPath: m_IsActive
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 4618699986641551656, guid: 679b77e479bbfc3479465d8316598db5,
+        type: 3}
+      propertyPath: m_RootOrder
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 4618699986641551656, guid: 679b77e479bbfc3479465d8316598db5,
+        type: 3}
+      propertyPath: m_LocalPosition.x
+      value: 8.97
+      objectReference: {fileID: 0}
+    - target: {fileID: 4618699986641551656, guid: 679b77e479bbfc3479465d8316598db5,
+        type: 3}
+      propertyPath: m_LocalPosition.z
+      value: -9.63
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 679b77e479bbfc3479465d8316598db5, type: 3}
 --- !u!1001 &1038174383
@@ -618,7 +627,7 @@ PrefabInstance:
     - target: {fileID: 645646752207592211, guid: 153625d9cbad82b44a4cafb3d2a54e43,
         type: 3}
       propertyPath: m_LocalPosition.x
-      value: -0.78
+      value: -4.21
       objectReference: {fileID: 0}
     - target: {fileID: 645646752207592211, guid: 153625d9cbad82b44a4cafb3d2a54e43,
         type: 3}
@@ -628,7 +637,7 @@ PrefabInstance:
     - target: {fileID: 645646752207592211, guid: 153625d9cbad82b44a4cafb3d2a54e43,
         type: 3}
       propertyPath: m_LocalPosition.z
-      value: -0.74
+      value: 4.11
       objectReference: {fileID: 0}
     - target: {fileID: 645646752207592211, guid: 153625d9cbad82b44a4cafb3d2a54e43,
         type: 3}
@@ -669,7 +678,7 @@ PrefabInstance:
         type: 3}
       propertyPath: player
       value: 
-      objectReference: {fileID: 96218791}
+      objectReference: {fileID: 0}
     - target: {fileID: 6054171323388307146, guid: 153625d9cbad82b44a4cafb3d2a54e43,
         type: 3}
       propertyPath: m_Constraints
