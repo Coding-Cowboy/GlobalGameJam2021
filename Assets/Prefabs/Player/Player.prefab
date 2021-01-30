@@ -243,6 +243,8 @@ MonoBehaviour:
     type: 3}
   BulletSpeed: 100
   HitCount: 3
+  isHit: 0
+  AC: {fileID: 7125040589235839431}
 --- !u!143 &7781305096760316076
 CharacterController:
   m_ObjectHideFlags: 0
@@ -355,7 +357,7 @@ PrefabInstance:
     - target: {fileID: 25132764012264487, guid: ce907acad8231ea4ca9dfb10674c5ce6,
         type: 3}
       propertyPath: m_LocalPosition.y
-      value: -2.5
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 25132764012264487, guid: ce907acad8231ea4ca9dfb10674c5ce6,
         type: 3}
@@ -425,7 +427,7 @@ PrefabInstance:
     - target: {fileID: 2749558096167803424, guid: ce907acad8231ea4ca9dfb10674c5ce6,
         type: 3}
       propertyPath: m_LocalPosition.y
-      value: -1
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 2749558096167803424, guid: ce907acad8231ea4ca9dfb10674c5ce6,
         type: 3}
@@ -608,6 +610,12 @@ GameObject:
 --- !u!4 &1328624451148094906 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 2749558096167803424, guid: ce907acad8231ea4ca9dfb10674c5ce6,
+    type: 3}
+  m_PrefabInstance: {fileID: 3771866269971974042}
+  m_PrefabAsset: {fileID: 0}
+--- !u!95 &7125040589235839431 stripped
+Animator:
+  m_CorrespondingSourceObject: {fileID: 6249138971869275741, guid: ce907acad8231ea4ca9dfb10674c5ce6,
     type: 3}
   m_PrefabInstance: {fileID: 3771866269971974042}
   m_PrefabAsset: {fileID: 0}
