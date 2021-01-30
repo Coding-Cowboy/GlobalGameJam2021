@@ -16,8 +16,6 @@ public class PlayerScript : MonoBehaviour
     public Face DirectionFacing { get; private set; }//The state of the direction that the player is facing
     public enum Face{Forward,Backward,Left,Right};
     //public Rigidbody rb;//RigidBody of the player
-    public bool isHit;//Flag for if the enemy has hit the player
-    public Animator AC;
     // Start is called before the first frame update
     void Start()
     {
@@ -43,7 +41,6 @@ public class PlayerScript : MonoBehaviour
 
     private void MovementInputs()
     {
-        bool isMoving = false;
         //Get the current position for the key inputs
         Vector3 Position = gameObject.transform.position;
         if (Input.GetKey("w") || Input.GetKey("up"))
@@ -52,34 +49,26 @@ public class PlayerScript : MonoBehaviour
             //Set the rotation to 0,0,0 since start
             Body.transform.eulerAngles = new Vector3(0, 0, 0);
             DirectionFacing = Face.Forward;
-            isMoving = true;
         }
         if (Input.GetKey("s") || Input.GetKey("down"))
         {
             Position.z -= MovementSpeed * Time.deltaTime;
             Body.transform.eulerAngles = new Vector3(0, -180, 0);
             DirectionFacing = Face.Backward;
-            isMoving = true;
-
         }
         if (Input.GetKey("a") || Input.GetKey("left"))
         {
             Position.x -= MovementSpeed * Time.deltaTime;
             Body.transform.eulerAngles = new Vector3(0, 270, 0);
             DirectionFacing = Face.Left;
-            isMoving = true;
-
         }
         if (Input.GetKey("d") || Input.GetKey("right"))
         {
             Position.x += MovementSpeed * Time.deltaTime;
             Body.transform.eulerAngles = new Vector3(0, 90, 0);
             DirectionFacing = Face.Right;
-            isMoving = true;
-
         }
 
-        AC.SetBool("IsMoving", isMoving);
         //Check for if both w and a are pressed for rotation
         //gameObject.transform.position = Position;
         GetComponent<CharacterController>().Move(Position-transform.position);
@@ -131,13 +120,17 @@ public class PlayerScript : MonoBehaviour
             }
         }
     }
-    public void OnControllerColliderHit(ControllerColliderHit hit)
+    public void OnCollisionEnter(Collision collision)
     {
-        if (hit.gameObject.tag == "Enemy")
-        {
+            Debug.Log("Ive been hit spongebob me boy");
             HitCount--;
-            isHit = true;
-            //GetComponent<CharacterController>().co
+    }
+    public void OnTriggerEnter(Collider other)
+    {
+        if (other.gameObject.tag == "Enemey")
+        {
+            Debug.Log("Ive been hit spongebob me boy");
+            HitCount--;
         }
     }
 }
