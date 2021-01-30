@@ -5,6 +5,7 @@ using UnityEngine;
 
 public class PlayerScript : MonoBehaviour
 {
+    AudioSource audioSource;
     public Camera PlayerCamera;//Player camera that we will comtrol
     public float MovementSpeed;//Speed that we will use to move the player
     public GameObject Body; //the body that we will rotate
@@ -22,12 +23,12 @@ public class PlayerScript : MonoBehaviour
     private Vector3 GoalRotation;//Goal rotation that will be set to every update
     public float shootCooldown = 0.7f;
     bool canShoot = true;
+    public AudioClip shootSoundEffect;
 
     // Start is called before the first frame update
     void Start()
     {
-        //Set the Rotation to 0,0,0 for the start of the game
-
+        audioSource = GetComponent<AudioSource>();
     }
 
     // Update is called once per frame
@@ -117,6 +118,7 @@ public class PlayerScript : MonoBehaviour
             GameObject NewBullet = Instantiate(BulletPrefab, Barrel.transform.position, Barrel.transform.rotation);
             NewBullet.transform.eulerAngles = new Vector3(0, directionAngle, 0);
             NewBullet.GetComponent<ShootingScript>().fire(BulletSpeed);
+            audioSource.PlayOneShot(shootSoundEffect); // sound FX
 
             // Shooting cooldown
             canShoot = false;
