@@ -14,6 +14,7 @@ public class SoundEffectScript : MonoBehaviour
         source = gameObject.AddComponent<AudioSource>();
         source.spatialBlend = 0.8f;
         source.volume = volume;
+        source.rolloffMode = AudioRolloffMode.Linear; // linear rolloff
     }
 
     // Update is called once per frame

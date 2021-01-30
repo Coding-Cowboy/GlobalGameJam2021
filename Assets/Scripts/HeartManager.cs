@@ -34,7 +34,8 @@ public class HeartManager : MonoBehaviour
 
             // Make new hearts
             cachedHealth = health;
-            hearts = new GameObject[cachedHealth];
+            if (!IsDead())
+                hearts = new GameObject[cachedHealth];
             for (int i = 0; i < cachedHealth; i++)
             {
                 float heartOffset = 60.0f;
@@ -45,5 +46,10 @@ public class HeartManager : MonoBehaviour
                 hearts[i] = newHeart;
             }
         }
+    }
+
+    public bool IsDead()
+    {
+        return (cachedHealth <= 0);
     }
 }

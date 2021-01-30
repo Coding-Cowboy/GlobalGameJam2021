@@ -11,17 +11,31 @@ public class UIManager : MonoBehaviour
     bool fadingIn = true;
     bool fadingOut = false;
 
+    public Button continueButton;
+    public Button quitButton;
+
+    public GameObject inGamePanel;
+
     public CanvasGroup pauseOverlay;
     public float pauseFadeSpeed = 2;
     bool pauseActive = false;
     bool pauseFading = false;
 
-    public Button continueButton;
-    public Button quitButton;
+    public CanvasGroup deathOverlay;
+    public float deathFadeSpeed = 2;
+    bool deathActive = false;
+    bool deathFading = false;
+
+    public CanvasGroup endgameOverlay;
+    public float endgameFadeSpeed = 0.1f;
+    bool endgameActive = false;
+    bool endgameFading = false;
 
     AudioSource music;
     float volumeGoal;
     bool musicOut = false;
+
+    HeartManager heartManager;
 
     // Start is called before the first frame update
     void Start()
@@ -30,8 +44,14 @@ public class UIManager : MonoBehaviour
         darkOverlay.gameObject.SetActive(true);
 
         // Disable pause panel + pause overlay
-        pauseOverlay.alpha = 0; // invisible black
+        pauseOverlay.alpha = 0;
         pauseOverlay.interactable = false;
+        // Disable death panel + death overlay
+        deathOverlay.alpha = 0;
+        deathOverlay.interactable = false;
+        // Disable endgame overlay
+        endgameOverlay.alpha = 0;
+        endgameOverlay.interactable = false;
 
         // Rig buttons to work
         continueButton.onClick.AddListener(TogglePause);
@@ -41,6 +61,8 @@ public class UIManager : MonoBehaviour
         volumeGoal = music.volume;
         music.volume = 0.005f;
         music.Play();
+
+        heartManager = FindObjectOfType<HeartManager>();
     }
 
     // Update is called once per frame
@@ -77,10 +99,18 @@ public class UIManager : MonoBehaviour
         }
 
         // Toggle PAUSE
-        if (Input.GetButtonDown("Pause"))
-        {
+        if (Input.GetButtonDown("Pause") && !deathActive && !endgameActive)
             TogglePause();
-        }
+
+        // Check DEATH
+        if (heartManager.IsDead() && !deathActive)
+            ToggleDeath();
+        if (deathActive && Input.GetButtonDown("Pause"))
+            ToggleDeath();
+
+        // Check ENDGAME exit
+        if (endgameActive && Input.GetButtonDown("Pause"))
+            QuitClicked();
 
         // Pause overlay fade
         if (pauseFading)
@@ -100,9 +130,37 @@ public class UIManager : MonoBehaviour
                     pauseFading = false;
             }
         }
+
+        // Death overlay fade
+        if (deathFading)
+        {
+            if (deathActive)
+            {
+                // Fade in
+                deathOverlay.alpha = Mathf.Clamp01(deathOverlay.alpha + (deathFadeSpeed * Time.unscaledDeltaTime));
+                if (deathOverlay.alpha >= 1)
+                    deathFading = false;
+            }
+            else
+            {
+                // Fade out
+                deathOverlay.alpha = Mathf.Clamp01(deathOverlay.alpha - (deathFadeSpeed * Time.unscaledDeltaTime));
+                if (deathOverlay.alpha <= 0)
+                    deathFading = false;
+            }
+        }
+
+        // Endgame overlay fade
+        if (endgameFading)
+        {
+            // Fade in
+            endgameOverlay.alpha = Mathf.Clamp01(endgameOverlay.alpha + (endgameFadeSpeed * Time.unscaledDeltaTime));
+            if (endgameOverlay.alpha >= 1)
+                endgameFading = false;
+        }
     }
 
-    // Fade dark overlay in/out
+    // Fade pause overlay in/out
     void TogglePause()
     {
         if (pauseActive)
@@ -119,6 +177,30 @@ public class UIManager : MonoBehaviour
             EventSystem.current.SetSelectedGameObject(continueButton.gameObject.transform.parent.gameObject); // set focus on pause panel
         }
         pauseFading = true;
+    }
+
+    // Fade death overlay in/out
+    void ToggleDeath()
+    {
+        if (deathActive)
+        {
+            QuitClicked();
+        }
+        else
+        {
+            deathActive = true;
+            deathOverlay.interactable = true;
+            Time.timeScale = 0;
+        }
+        deathFading = true;
+    }
+
+    // Fade in the endgame overlay
+    public void Endgame()
+    {
+        endgameActive = true;
+        endgameFading = true;
+        inGamePanel.SetActive(false);
     }
 
     void QuitClicked()

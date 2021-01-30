@@ -17,11 +17,14 @@ public class LevelManager : MonoBehaviour
         lightTheme.SetActive(true);
         darkTheme.SetActive(false);
 
-        //destroy all enemies
+        // Destroy all enemies
         EnemyScript[] enemies = FindObjectsOfType<EnemyScript>();
         for (int i = 0; i < enemies.Length; i++)
         {
             UnityEngine.Object.Destroy(enemies[i].gameObject);
         }
+
+        // Call UIManager endgame
+        FindObjectOfType<UIManager>().Endgame();
     }
 }

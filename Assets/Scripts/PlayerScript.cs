@@ -15,7 +15,7 @@ public class PlayerScript : MonoBehaviour
     public float BulletSpeed;//Speed of the bullets
     public int HitCount;//The amount of times that a player can be hit.
     public bool isHit;
-    public float hitTimer = 1.5f;
+    public float hitTimer = 1f;
     public Face DirectionFacing { get; private set; }//The state of the direction that the player is facing
     public Face PreviousDirection { get; private set; }
     public float directionAngle;
@@ -63,7 +63,7 @@ public class PlayerScript : MonoBehaviour
         hitTimer -= Time.deltaTime;
         if(hitTimer < 0)
         {
-            hitTimer = 1.5f;
+            hitTimer = 1f;
             isHit = false;
         }
     }
@@ -209,13 +209,26 @@ public class PlayerScript : MonoBehaviour
     }
     public void OnTriggerEnter(Collider other)
     {
-        //if (hit.gameObject.tag == "Enemy")
-        if (other.gameObject.name == "Spider" && !isHit)
+        if (other.gameObject.tag == "Enemy" && !isHit)
         {
             HitCount--;
             //take the RigidBody from teh enemy and apply the force of a less powerful shotgun
             //hit.gameObject.GetComponent<Rigidbody>().AddForce(transform.forward * BulletSpeed/2);
             other.gameObject.GetComponent<Rigidbody>().AddForce(-other.gameObject.transform.right * BulletSpeed/5);
+            //set flag and disable collider
+            isHit = true;
+            Debug.Log("Ive been hit spongebob me boy");
+        }
+    }
+
+    public void OnTriggerStay(Collider other)
+    {
+        if (other.gameObject.tag == "Enemy" && !isHit)
+        {
+            HitCount--;
+            //take the RigidBody from teh enemy and apply the force of a less powerful shotgun
+            //hit.gameObject.GetComponent<Rigidbody>().AddForce(transform.forward * BulletSpeed/2);
+            other.gameObject.GetComponent<Rigidbody>().AddForce(-other.gameObject.transform.right * BulletSpeed / 5);
             //set flag and disable collider
             isHit = true;
             Debug.Log("Ive been hit spongebob me boy");
