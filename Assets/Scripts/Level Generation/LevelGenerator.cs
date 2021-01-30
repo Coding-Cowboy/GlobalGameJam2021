@@ -127,7 +127,7 @@ public class LevelGenerator : MonoBehaviour
     }
 
     // Start is called before the first frame update
-    void Start()
+    void Awake()
     {
         minCompletionDistance = (int)(Mathf.Min(rows, cols) / 2 + 0.5f);
         wallData = GetWallData();
@@ -388,6 +388,10 @@ public class LevelGenerator : MonoBehaviour
         Destroy(tiles[endRow][endCol].tileGameObject);
 
         tiles[endRow][endCol].tileGameObject = Object.Instantiate(goalPrefab, goalPosition, goalRotation);
+
+        Vector3 playerPosition = new Vector3(startCol * gridSize, 0, startRow * gridSize);
+        Vector3 spawnOffset = new Vector3(0.0f, 1.03f, 0.0f);
+        Object.Instantiate(playerPrefab, playerPosition + spawnOffset, new Quaternion());
     }
 
     private int calcManhattanDistance(int x1, int y1, int x2, int y2)
