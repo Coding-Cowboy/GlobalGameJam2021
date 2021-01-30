@@ -385,9 +385,19 @@ PrefabInstance:
       propertyPath: BulletSpeed
       value: 8.5
       objectReference: {fileID: 0}
+    - target: {fileID: 2637831632140888121, guid: 679b77e479bbfc3479465d8316598db5,
+        type: 3}
+      propertyPath: NumberOfBullets
+      value: 5
+      objectReference: {fileID: 0}
     - target: {fileID: 2637831632140888122, guid: 679b77e479bbfc3479465d8316598db5,
         type: 3}
       propertyPath: m_Name
+      value: Player
+      objectReference: {fileID: 0}
+    - target: {fileID: 2637831632140888122, guid: 679b77e479bbfc3479465d8316598db5,
+        type: 3}
+      propertyPath: m_TagString
       value: Player
       objectReference: {fileID: 0}
     m_RemovedComponents: []
