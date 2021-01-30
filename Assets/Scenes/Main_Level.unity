@@ -38,7 +38,7 @@ RenderSettings:
   m_ReflectionIntensity: 1
   m_CustomReflection: {fileID: 0}
   m_Sun: {fileID: 0}
-  m_IndirectSpecularColor: {r: 0.00009308622, g: 0.00008720655, b: 0.00015505508,
+  m_IndirectSpecularColor: {r: 0.00008659188, g: 0.000080816506, b: 0.00014061817,
     a: 1}
   m_UseRadianceAmbientProbe: 0
 --- !u!157 &3
@@ -566,7 +566,7 @@ MonoBehaviour:
   cols: 5
   campFireSpawnChance: 0.25
   landmarkSpawnChance: 0.25
-  pickupSpawnChance: 0.25
+  pickupSpawnChance: 0.33
   playerPrefab: {fileID: 4618699986641551658, guid: 679b77e479bbfc3479465d8316598db5,
     type: 3}
   goalPrefab: {fileID: 9207646578867713205, guid: bbad1f55fb4ebdd43b03cc7ee5be88e1,
