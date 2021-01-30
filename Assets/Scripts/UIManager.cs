@@ -5,10 +5,16 @@ using UnityEngine.EventSystems;
 
 public class UIManager : MonoBehaviour
 {
+    public CanvasGroup darkOverlay;
+    public float fadeInSpeed = 0.5f;
+    public float fadeOutSpeed = 0.75f;
+    bool fadingIn = true;
+    bool fadingOut = false;
+
     public CanvasGroup pauseOverlay;
-    public float fadeSpeed = 1;
-    bool overlayActive = false;
-    bool overlayFading = false;
+    public float pauseFadeSpeed = 2;
+    bool pauseActive = false;
+    bool pauseFading = false;
 
     public Button continueButton;
     public Button quitButton;
@@ -17,7 +23,10 @@ public class UIManager : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        // Disable pause panel + overlay
+        // Enable overlay and start fade in
+        darkOverlay.gameObject.SetActive(true);
+
+        // Disable pause panel + pause overlay
         pauseOverlay.alpha = 0; // invisible black
         pauseOverlay.interactable = false;
 
@@ -29,28 +38,47 @@ public class UIManager : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+        // Fade dark overlay in
+        if (fadingIn)
+        {
+            darkOverlay.alpha = Mathf.Clamp01(darkOverlay.alpha - (fadeInSpeed * Time.deltaTime));
+            if (darkOverlay.alpha <= 0)
+                fadingIn = false;
+        }
+        // Fade dark overlay out
+        else if (fadingOut)
+        {
+            darkOverlay.alpha = Mathf.Clamp01(darkOverlay.alpha + (fadeOutSpeed * Time.deltaTime));
+            if (darkOverlay.alpha >= 1)
+            {
+                fadingOut = false;
+                // Quit to menu
+                QuitToMenu();
+            }
+        }
+
         // Toggle PAUSE
         if (Input.GetButtonDown("Cancel"))
         {
             TogglePause();
         }
 
-        // Overlay fade
-        if (overlayFading)
+        // Pause overlay fade
+        if (pauseFading)
         {
-            if (overlayActive)
+            if (pauseActive)
             {
                 // Fade in
-                pauseOverlay.alpha = Mathf.Clamp01(pauseOverlay.alpha + (fadeSpeed * Time.unscaledDeltaTime));
+                pauseOverlay.alpha = Mathf.Clamp01(pauseOverlay.alpha + (pauseFadeSpeed * Time.unscaledDeltaTime));
                 if (pauseOverlay.alpha >= 1)
-                    overlayFading = false;
+                    pauseFading = false;
             }
             else
             {
                 // Fade out
-                pauseOverlay.alpha = Mathf.Clamp01(pauseOverlay.alpha - (fadeSpeed * Time.unscaledDeltaTime));
+                pauseOverlay.alpha = Mathf.Clamp01(pauseOverlay.alpha - (pauseFadeSpeed * Time.unscaledDeltaTime));
                 if (pauseOverlay.alpha <= 0)
-                    overlayFading = false;
+                    pauseFading = false;
             }
         }
     }
@@ -58,23 +86,30 @@ public class UIManager : MonoBehaviour
     // Fade dark overlay in/out
     void TogglePause()
     {
-        if (overlayActive)
+        if (pauseActive)
         {
-            overlayActive = false;
+            pauseActive = false;
             pauseOverlay.interactable = false;
             Time.timeScale = 1;
         }
         else
         {
-            overlayActive = true;
+            pauseActive = true;
             pauseOverlay.interactable = true;
             Time.timeScale = 0;
             EventSystem.current.SetSelectedGameObject(continueButton.gameObject.transform.parent.gameObject); // set focus on pause panel
         }
-        overlayFading = true;
+        pauseFading = true;
     }
 
     void QuitClicked()
+    {
+        // Start fading out to black
+        Time.timeScale = 1;
+        fadingOut = true;
+    }
+
+    void QuitToMenu()
     {
         // Quit to menu
         SceneManager.LoadScene(0);
