@@ -245,6 +245,7 @@ MonoBehaviour:
   HitCount: 3
   isHit: 0
   AC: {fileID: 7125040589235839431}
+  RotationSpeed: 7
 --- !u!143 &7781305096760316076
 CharacterController:
   m_ObjectHideFlags: 0

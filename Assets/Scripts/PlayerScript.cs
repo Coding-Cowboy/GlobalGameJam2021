@@ -14,10 +14,14 @@ public class PlayerScript : MonoBehaviour
     public float BulletSpeed;//Speed of the bullets
     public int HitCount;//The amount of times that a player can be hit.
     public Face DirectionFacing { get; private set; }//The state of the direction that the player is facing
+    public Face PreviousDirection { get; private set; }
     public enum Face{Forward,Backward,Left,Right};
     //public Rigidbody rb;//RigidBody of the player
     public bool isHit;//Flag for if the enemy has hit the player
     public Animator AC;
+    public float RotationSpeed;//Speed of the rotation for the turning
+    private Vector3 GoalRotation;//Goal rotation that will be set to every update
+
     // Start is called before the first frame update
     void Start()
     {
@@ -31,6 +35,7 @@ public class PlayerScript : MonoBehaviour
         MovementInputs();
         FireInputs();
         EndGame();
+        turn();
     }
 
     private void EndGame()
@@ -48,32 +53,36 @@ public class PlayerScript : MonoBehaviour
         Vector3 Position = gameObject.transform.position;
         if (Input.GetKey("w") || Input.GetKey("up"))
         {
+            PreviousDirection = DirectionFacing;
             Position.z += MovementSpeed * Time.deltaTime;
             //Set the rotation to 0,0,0 since start
-            Body.transform.eulerAngles = new Vector3(0, 0, 0);
+            GoalRotation = new Vector3(0, 0, 0);
             DirectionFacing = Face.Forward;
             isMoving = true;
         }
         if (Input.GetKey("s") || Input.GetKey("down"))
         {
+            PreviousDirection = DirectionFacing;
             Position.z -= MovementSpeed * Time.deltaTime;
-            Body.transform.eulerAngles = new Vector3(0, -180, 0);
+            GoalRotation = new Vector3(0, -180, 0);
             DirectionFacing = Face.Backward;
             isMoving = true;
 
         }
         if (Input.GetKey("a") || Input.GetKey("left"))
         {
+            PreviousDirection = DirectionFacing;
             Position.x -= MovementSpeed * Time.deltaTime;
-            Body.transform.eulerAngles = new Vector3(0, 270, 0);
+            GoalRotation = new Vector3(0, 270, 0);
             DirectionFacing = Face.Left;
             isMoving = true;
 
         }
         if (Input.GetKey("d") || Input.GetKey("right"))
         {
+            PreviousDirection = DirectionFacing;
             Position.x += MovementSpeed * Time.deltaTime;
-            Body.transform.eulerAngles = new Vector3(0, 90, 0);
+            GoalRotation = new Vector3(0, 90, 0);
             DirectionFacing = Face.Right;
             isMoving = true;
 
@@ -82,7 +91,13 @@ public class PlayerScript : MonoBehaviour
         AC.SetBool("IsMoving", isMoving);
         //Check for if both w and a are pressed for rotation
         //gameObject.transform.position = Position;
+        //Move down as well to prevelt climbing
+        Position.y = 0f;
         GetComponent<CharacterController>().Move(Position-transform.position);
+    }
+    private void turn()
+    {
+        Body.transform.rotation = Quaternion.Slerp(Body.transform.rotation, Quaternion.Euler(GoalRotation), Time.deltaTime * RotationSpeed);
     }
     private void FireInputs()
     {
