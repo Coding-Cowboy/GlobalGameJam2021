@@ -9,7 +9,10 @@ public class CampfireSpawner : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-
+        for (int i = 0; i < campfires.Length; i++)
+        {
+            campfires[i].SetActive(false);
+        }
     }
 
     // Update is called once per frame
