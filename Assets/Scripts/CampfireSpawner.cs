@@ -6,6 +6,7 @@ public class CampfireSpawner : MonoBehaviour
 {
 
     public GameObject[] campfires;
+    public int activeIndex = 0;
     // Start is called before the first frame update
     void Start()
     {
@@ -13,6 +14,7 @@ public class CampfireSpawner : MonoBehaviour
         {
             campfires[i].SetActive(false);
         }
+        campfires[activeIndex].SetActive(true);
     }
 
     // Update is called once per frame
@@ -23,10 +25,10 @@ public class CampfireSpawner : MonoBehaviour
 
     public void SpawnCampfire()
     {
-        //Debug.Log("Campfire spawn");
+        //assumes that this function will get called in the awake phase
         if (campfires.Length > 0)
         {
-            campfires[UnityEngine.Random.Range(0, campfires.Length - 1)].SetActive(true);
+            activeIndex = UnityEngine.Random.Range(0, campfires.Length - 1);
         }
     }
 }
