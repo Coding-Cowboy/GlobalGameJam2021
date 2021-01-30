@@ -38,7 +38,7 @@ RenderSettings:
   m_ReflectionIntensity: 1
   m_CustomReflection: {fileID: 0}
   m_Sun: {fileID: 0}
-  m_IndirectSpecularColor: {r: 0.00008896675, g: 0.00008311175, b: 0.00014411272,
+  m_IndirectSpecularColor: {r: 0.00009306201, g: 0.00008743216, b: 0.00015136121,
     a: 1}
   m_UseRadianceAmbientProbe: 0
 --- !u!157 &3
@@ -533,8 +533,10 @@ MonoBehaviour:
   turn:
   - {fileID: 2257218152603366722, guid: f8f56f39246e2d7498f033ff8fd41ed7, type: 3}
   - {fileID: 2257218152603366722, guid: ed307338508bb764a811dae66901f0c5, type: 3}
+  - {fileID: 2257218152603366722, guid: ed307338508bb764a811dae66901f0c5, type: 3}
   tee:
   - {fileID: 7332189296215420263, guid: cad4c8cfcd4509445986a9007e512527, type: 3}
+  - {fileID: 7332189296215420263, guid: d9a0ca6ee3f8ebc48a0dccc429386348, type: 3}
   - {fileID: 7332189296215420263, guid: d9a0ca6ee3f8ebc48a0dccc429386348, type: 3}
   cross:
   - {fileID: 6410194610331434391, guid: e023adcac64f6b84da6f098a534f1700, type: 3}
