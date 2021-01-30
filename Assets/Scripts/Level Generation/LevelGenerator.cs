@@ -127,7 +127,7 @@ public class LevelGenerator : MonoBehaviour
     }
 
     // Start is called before the first frame update
-    void Start()
+    void Awake()
     {
         minCompletionDistance = (int)(Mathf.Min(rows, cols) / 2 + 0.5f);
         wallData = GetWallData();
