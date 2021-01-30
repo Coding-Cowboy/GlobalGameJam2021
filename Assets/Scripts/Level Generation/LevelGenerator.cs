@@ -10,6 +10,7 @@ public class LevelGenerator : MonoBehaviour
     //public float minSpawnTimer = 5;
     public float gridSize = 23.5f;
     public int rows = 7, cols = 7;
+    public float campFireSpawnChance = 0.15f;
     //public GameObject[] enemyPrefabs;
     public GameObject playerPrefab;
     public GameObject goalPrefab;
@@ -153,6 +154,12 @@ public class LevelGenerator : MonoBehaviour
             for (int j = 0; j < tiles[i].Length; j++)
             {
                 GameObject spawnedPiece = spawnTile(i, j);
+                if (UnityEngine.Random.Range(0.0f, 1.0f) <= campFireSpawnChance)
+                {
+                    CampfireSpawner spawner = spawnedPiece.GetComponent<CampfireSpawner>();
+                    if (spawner != null)
+                        spawner.SpawnCampfire();
+                }
 
                 if (debugMode == true)
                 {
