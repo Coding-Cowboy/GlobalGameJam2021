@@ -10397,7 +10397,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   campfires:
   - {fileID: 86076103628346223}
-  activeIndex: 0
 --- !u!1001 &49660175174086243
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -17150,6 +17149,11 @@ PrefabInstance:
         type: 3}
       propertyPath: m_Name
       value: Asset_Cabin
+      objectReference: {fileID: 0}
+    - target: {fileID: 3451118302482216456, guid: 070701cd86a865849841ad5cdc5294f9,
+        type: 3}
+      propertyPath: m_Convex
+      value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 070701cd86a865849841ad5cdc5294f9, type: 3}

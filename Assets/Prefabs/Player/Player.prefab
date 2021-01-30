@@ -609,7 +609,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   PlayerCamera: {fileID: 4295950877532333936}
-  MovementSpeed: 5.5
+  MovementSpeed: 8
   Body: {fileID: 522717495138308928}
   Barrel: {fileID: 6645295725895872049}
   NumberOfBullets: 5
@@ -623,7 +623,7 @@ MonoBehaviour:
   AC: {fileID: 460110861540821207}
   RotationSpeed: 7
   shootCooldown: 0.7
-  shootSoundEffect: {fileID: 8300000, guid: 8da59d8ba252780418e8f2363e7dff99, type: 3}
+  shootSoundEffect: {fileID: 8300000, guid: 7d070bacae26007449d617f283edb9df, type: 3}
   shootSoundVolume: 1
 --- !u!143 &1116647569603246524
 CharacterController:
@@ -1191,7 +1191,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 7927324818315059203}
   m_LocalRotation: {x: 0.50482893, y: -0, z: -0, w: 0.86321944}
-  m_LocalPosition: {x: 0, y: 14.718998, z: -7.6280003}
+  m_LocalPosition: {x: 0, y: 12.49, z: -6.5}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 4618699986641551656}
@@ -1682,6 +1682,11 @@ PrefabInstance:
         type: 3}
       propertyPath: m_Layer
       value: 11
+      objectReference: {fileID: 0}
+    - target: {fileID: 3451118302482216456, guid: 792dc5bf22fcd294082f2f26061568eb,
+        type: 3}
+      propertyPath: m_Enabled
+      value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 792dc5bf22fcd294082f2f26061568eb, type: 3}

@@ -925,7 +925,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   player: {fileID: 0}
-  chaseSpeed: 4
+  chaseSpeed: 3.5
   detectionRange: 30
   keepChasing: 1
 --- !u!54 &171747834617667279
