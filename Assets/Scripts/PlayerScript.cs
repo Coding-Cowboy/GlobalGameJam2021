@@ -36,25 +36,25 @@ public class PlayerScript : MonoBehaviour
         {
             Position.z += MovementSpeed * Time.deltaTime;
             //Set the rotation to 0,0,0 since start
-            Body.transform.eulerAngles = new Vector3(0, 180, 0);
+            Body.transform.eulerAngles = new Vector3(0, 0, 0);
             DirectionFacing = Face.Forward;
         }
         if (Input.GetKey("s") || Input.GetKey("down"))
         {
             Position.z -= MovementSpeed * Time.deltaTime;
-            Body.transform.eulerAngles = new Vector3(0, 0, 0);
+            Body.transform.eulerAngles = new Vector3(0, -180, 0);
             DirectionFacing = Face.Backward;
         }
         if (Input.GetKey("a") || Input.GetKey("left"))
         {
             Position.x -= MovementSpeed * Time.deltaTime;
-            Body.transform.eulerAngles = new Vector3(0, 90, 0);
+            Body.transform.eulerAngles = new Vector3(0, 270, 0);
             DirectionFacing = Face.Left;
         }
         if (Input.GetKey("d") || Input.GetKey("right"))
         {
             Position.x += MovementSpeed * Time.deltaTime;
-            Body.transform.eulerAngles = new Vector3(0, 270, 0);
+            Body.transform.eulerAngles = new Vector3(0, 90, 0);
             DirectionFacing = Face.Right;
         }
 
@@ -65,42 +65,24 @@ public class PlayerScript : MonoBehaviour
     {
         if (Input.GetKeyDown(KeyCode.Space) || Input.GetKeyDown(KeyCode.Return))
         {
+            GameObject NewBullet = Instantiate(BulletPrefab, Barrel.transform.position,Barrel.transform.rotation);
             switch(DirectionFacing)
             {
                 case Face.Forward:
+                        //Create the bullet for element i
+                        //Give the NewBullet the Prefab for a bullet, the barrel transform position and the barrel transform rotation
+                        //Set the Bullet eulerAngle to face the right way when firing
+                        NewBullet.transform.eulerAngles = new Vector3(0, 0, 0);
+                        NewBullet.GetComponent<ShootingScript>().fire( "Forward", BulletSpeed);
+                    break;
+                case Face.Backward:
                     for (int i = 0; i < NumberOfBullets; i++)
                     {
                         //Create the bullet for element i
                         //Give the NewBullet the Prefab for a bullet, the barrel transform position and the barrel transform rotation
-                        GameObject NewBullet = Instantiate(BulletPrefab, Barrel.transform.position + new Vector3(0,0,.06f),Barrel.transform.rotation);
-                        //Set the Bullet eulerAngle to face the right way when firing
-                        NewBullet.transform.eulerAngles = new Vector3(0, 0, 0);
-                        //Add Force
-                        //180 - ((180/NumberofBullets)*element I)
-                        //if (i != 0 && i != NumberOfBullets - 1)
-                        //    NewBullet.GetComponent<ShootingScript>().fire(new Vector3(0, (180 - ((180 / NumberOfBullets) * i)), 0) * BulletSpeed);
-                        //else if (i == 0)
-                        //    NewBullet.GetComponent<ShootingScript>().fire((new Vector3(0, (180 - ((180 / NumberOfBullets / 2))), 0) * BulletSpeed));
-                        //else if (i == NumberOfBullets - 1)
-                        //    NewBullet.GetComponent<ShootingScript>().fire((new Vector3(0, (((180 / NumberOfBullets / 2))), 0) * BulletSpeed));
-                    }
-                    break;
-                case Face.Backward:
-                        for (int i = 0; i < NumberOfBullets; i++)
-                        {
-                        //Create the bullet for element i
-                        //Give the NewBullet the Prefab for a bullet, the barrel transform position and the barrel transform rotation
-                        GameObject NewBullet = Instantiate(BulletPrefab, Barrel.transform.position - new Vector3(0, 0, .06f), Barrel.transform.rotation);
                         //Set the Bullet eulerAngle to face the right way when firing
                         NewBullet.transform.eulerAngles = new Vector3(0, 180, 0);
-                        //Add Force
-                        //180 - ((180/NumberofBullets)*element I)
-                        if (i != 0 && i != NumberOfBullets - 1)
-                            NewBullet.GetComponent<Rigidbody>().AddForce((/*NewBullet.transform.forward + new Vector3(0, (180 - ((180 / NumberOfBullets) * i)), 0) * BulletSpeed));
-                        else if (i == 0)
-                            NewBullet.GetComponent<Rigidbody>().AddForce((/*NewBullet.transform.forward + */new Vector3(0, (180 - ((180 / NumberOfBullets / 2))), 0) * BulletSpeed));
-                        else if (i == NumberOfBullets - 1)
-                            NewBullet.GetComponent<Rigidbody>().AddForce((/*NewBullet.transform.forward + */new Vector3(0, (((180 / NumberOfBullets/2))), 0) * BulletSpeed));
+                        NewBullet.GetComponent<ShootingScript>().fire("Backward", BulletSpeed);
                     }
                     break;
                 case Face.Left:
@@ -108,17 +90,9 @@ public class PlayerScript : MonoBehaviour
                     {
                         //Create the bullet for element i
                         //Give the NewBullet the Prefab for a bullet, the barrel transform position and the barrel transform rotation
-                        GameObject NewBullet = Instantiate(BulletPrefab, Barrel.transform.position - new Vector3(0.06f, 0, 0), Barrel.transform.rotation);
                         //Set the Bullet eulerAngle to face the right way when firing
                         NewBullet.transform.eulerAngles = new Vector3(0, 270, 0);
-                        //Add Force
-                        //180 - ((180/NumberofBullets)*element I)
-                        if (i != 0 && i != NumberOfBullets - 1)
-                            NewBullet.GetComponent<Rigidbody>().AddForce((/*NewBullet.transform.forward + */new Vector3(0, (180 - ((180 / NumberOfBullets) * i)), 0) * BulletSpeed));
-                        else if (i == 0)
-                            NewBullet.GetComponent<Rigidbody>().AddForce((/*NewBullet.transform.forward + */new Vector3(0, (180 - ((180 / NumberOfBullets / 2))), 0) * BulletSpeed));
-                        else if(i == NumberOfBullets-1)
-                            NewBullet.GetComponent<Rigidbody>().AddForce((/*NewBullet.transform.forward + */new Vector3(0, (((180 / NumberOfBullets / 2))), 0) * BulletSpeed));
+                        NewBullet.GetComponent<ShootingScript>().fire("Left", BulletSpeed);
                     }
                     break;
                 case Face.Right:
@@ -126,17 +100,9 @@ public class PlayerScript : MonoBehaviour
                     {
                         //Create the bullet for element i
                         //Give the NewBullet the Prefab for a bullet, the barrel transform position and the barrel transform rotation
-                        GameObject NewBullet = Instantiate(BulletPrefab, Barrel.transform.position + new Vector3(0.06f, 0, 0), Barrel.transform.rotation);
                         //Set the Bullet eulerAngle to face the right way when firing
                         NewBullet.transform.eulerAngles = new Vector3(0, 90, 0);
-                        //Add Force
-                        //180 - ((180/NumberofBullets)*element I)
-                        if (i != 0 && i != NumberOfBullets - 1)
-                            NewBullet.GetComponent<Rigidbody>().AddForce((/*NewBullet.transform.forward + */new Vector3(0, (180 - ((180 / NumberOfBullets) * i)), 0) * BulletSpeed));
-                        else if (i == 0)
-                            NewBullet.GetComponent<Rigidbody>().AddForce((/*NewBullet.transform.forward + */new Vector3(0, (180 - ((180 / NumberOfBullets / 2))), 0) * BulletSpeed));
-                        else if (i == NumberOfBullets - 1)
-                            NewBullet.GetComponent<Rigidbody>().AddForce((/*NewBullet.transform.forward + */new Vector3(0, (((180 / NumberOfBullets / 2))), 0) * BulletSpeed));
+                        NewBullet.GetComponent<ShootingScript>().fire("Right", BulletSpeed);
                     }
                     break;
             }
