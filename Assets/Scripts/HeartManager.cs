@@ -37,7 +37,7 @@ public class HeartManager : MonoBehaviour
             hearts = new GameObject[cachedHealth];
             for (int i = 0; i < cachedHealth; i++)
             {
-                float heartOffset = 70.0f;
+                float heartOffset = 60.0f;
                 GameObject newHeart = Instantiate(heartPrefab, transform);
                 RectTransform uiPosition = newHeart.GetComponent<RectTransform>();
                 uiPosition.anchoredPosition = new Vector2(uiPosition.anchoredPosition.x - heartOffset * i, uiPosition.anchoredPosition.y);

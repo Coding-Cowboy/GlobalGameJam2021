@@ -19,6 +19,9 @@ public class UIManager : MonoBehaviour
     public Button continueButton;
     public Button quitButton;
 
+    AudioSource music;
+    float volumeGoal;
+    bool musicOut = false;
 
     // Start is called before the first frame update
     void Start()
@@ -33,11 +36,27 @@ public class UIManager : MonoBehaviour
         // Rig buttons to work
         continueButton.onClick.AddListener(TogglePause);
         quitButton.onClick.AddListener(QuitClicked);
+
+        music = GetComponent<AudioSource>();
+        volumeGoal = music.volume;
+        music.volume = 0.005f;
+        music.Play();
     }
 
     // Update is called once per frame
     void Update()
     {
+        // Fade music in
+        if (!musicOut)
+            if (music.volume < volumeGoal)
+                music.volume += 0.006f;
+            else
+                musicOut = true;
+        // Fade music out
+        else if (fadingOut)
+            if (music.volume > 0)
+                music.volume -= 0.006f;
+
         // Fade dark overlay in
         if (fadingIn)
         {

@@ -27,12 +27,14 @@ public class PlayerScript : MonoBehaviour
     public float shootCooldown = 0.7f;
     bool canShoot = true;
     public AudioClip shootSoundEffect;
-    public HeartManager heartManager;
+    HeartManager heartManager;
 
     // Start is called before the first frame update
     void Start()
     {
         audioSource = GetComponent<AudioSource>();
+
+        heartManager = FindObjectOfType<HeartManager>();
     }
 
     // Update is called once per frame
