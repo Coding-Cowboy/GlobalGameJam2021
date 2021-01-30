@@ -23,6 +23,7 @@ public class PlayerScript : MonoBehaviour
     public Animator AC;
     public float RotationSpeed;//Speed of the rotation for the turning
     private Vector3 GoalRotation;//Goal rotation that will be set to every update
+    bool isMoving = false;
     public float shootCooldown = 0.7f;
     bool canShoot = true;
     public AudioClip shootSoundEffect;
@@ -62,7 +63,6 @@ public class PlayerScript : MonoBehaviour
     }
     private void MovementInputs()
     {
-        bool isMoving = false;
         //Get the current position for the key inputs
         Vector3 Position = gameObject.transform.position;
 
@@ -75,6 +75,14 @@ public class PlayerScript : MonoBehaviour
             Position.z += vInput * MovementSpeed * Time.deltaTime;
             directionAngle = Vector3.SignedAngle(Vector3.forward, new Vector3(hInput, 0, vInput).normalized, Vector3.up);
             GoalRotation = new Vector3(0, directionAngle, 0);
+            if (!audioSource.isPlaying)
+                audioSource.Play();
+        }
+        else
+        {
+            isMoving = false;
+            if (audioSource.isPlaying)
+                audioSource.Stop();
         }
 
         /*if (Input.GetAxisRaw("Horizontal") < -0.4f)
@@ -130,7 +138,7 @@ public class PlayerScript : MonoBehaviour
             GameObject NewBullet = Instantiate(BulletPrefab, Barrel.transform.position, Barrel.transform.rotation);
             NewBullet.transform.eulerAngles = new Vector3(0, directionAngle, 0);
             NewBullet.GetComponent<ShootingScript>().fire(BulletSpeed);
-            audioSource.PlayOneShot(shootSoundEffect); // sound FX
+            SoundEffectScript.PlaySoundEffect(transform, shootSoundEffect); // sound FX
 
             // Shooting cooldown
             canShoot = false;

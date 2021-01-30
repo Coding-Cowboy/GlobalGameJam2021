@@ -3,6 +3,7 @@
 public class EnemyScript : MonoBehaviour
 {
     Rigidbody body;
+    AudioSource audioSource;
 
     public GameObject player;
     public float chaseSpeed = 2.2f;
@@ -14,6 +15,7 @@ public class EnemyScript : MonoBehaviour
     void Start()
     {
         body = GetComponent<Rigidbody>();
+        audioSource = GetComponent<AudioSource>();
 
         // Find spawned player
         if (player == null)
@@ -53,6 +55,12 @@ public class EnemyScript : MonoBehaviour
                 moveVelocity = body.velocity;
 
             transform.position += moveVelocity * Time.deltaTime;
+
+            // Sound FX
+            if (!audioSource.isPlaying)
+                audioSource.Play();
         }
+        else if (audioSource.isPlaying)
+                audioSource.Stop();
     }
 }
