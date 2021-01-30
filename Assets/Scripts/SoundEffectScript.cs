@@ -5,6 +5,7 @@ public class SoundEffectScript : MonoBehaviour
 {
     public AudioClip clip;
     public AudioSource source;
+    public float volume;
     private bool played = false;
 
     // Start is called before the first frame update
@@ -12,7 +13,7 @@ public class SoundEffectScript : MonoBehaviour
     {
         source = gameObject.AddComponent<AudioSource>();
         source.spatialBlend = 0.8f;
-        source.volume = 1.0f;
+        source.volume = volume;
     }
 
     // Update is called once per frame
@@ -36,14 +37,14 @@ public class SoundEffectScript : MonoBehaviour
         played = true;
     }
 
-    public static void PlaySoundEffect(Transform parent, AudioClip clip, float volume)
+    public static void PlaySoundEffect(Transform parent, AudioClip clip, float volume = 1.0f)
     {
         GameObject soundMaker = new GameObject("SoundEffect");
         soundMaker.transform.position = parent.position;
         soundMaker.transform.parent = parent;
         SoundEffectScript source = soundMaker.AddComponent<SoundEffectScript>();
         source.clip = clip;
-        source.source.volume = volume;
+        source.volume = volume;
         source.Play();
     }
 }
