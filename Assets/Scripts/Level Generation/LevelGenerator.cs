@@ -392,6 +392,6 @@ public class LevelGenerator : MonoBehaviour
 
     private int calcManhattanDistance(int x1, int y1, int x2, int y2)
     {
-        return (x2 - x1) + (y2 - y1);
+        return Mathf.Abs(x2 - x1) + Mathf.Abs(y2 - y1);
     }
 }
