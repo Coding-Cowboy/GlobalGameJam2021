@@ -58,7 +58,7 @@ public class UIManager : MonoBehaviour
         }
 
         // Toggle PAUSE
-        if (Input.GetButtonDown("Cancel"))
+        if (Input.GetButtonDown("Pause"))
         {
             TogglePause();
         }

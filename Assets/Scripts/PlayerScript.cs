@@ -22,6 +22,8 @@ public class PlayerScript : MonoBehaviour
     public Animator AC;
     public float RotationSpeed;//Speed of the rotation for the turning
     private Vector3 GoalRotation;//Goal rotation that will be set to every update
+    public float shootCooldown = 0.7f;
+    bool canShoot = true;
 
     // Start is called before the first frame update
     void Start()
@@ -111,12 +113,16 @@ public class PlayerScript : MonoBehaviour
     }
     private void FireInputs()
     {
-        // Jump includes space, Z, and joystick button
-        if (Input.GetButtonDown("Jump"))
+        // Jump includes space, Z, and joystick trigger
+        if (Input.GetButtonDown("Fire1") && canShoot)
         {
             GameObject NewBullet = Instantiate(BulletPrefab, Barrel.transform.position, Barrel.transform.rotation);
             NewBullet.transform.eulerAngles = new Vector3(0, directionAngle, 0);
             NewBullet.GetComponent<ShootingScript>().fire(BulletSpeed);
+
+            // Shooting cooldown
+            canShoot = false;
+            Invoke("EnableShooting", shootCooldown);
 
             /*switch(DirectionFacing)
             {
@@ -168,5 +174,10 @@ public class PlayerScript : MonoBehaviour
             isHit = true;
             //GetComponent<CharacterController>().co
         }
+    }
+
+    void EnableShooting()
+    {
+        canShoot = true;
     }
 }
