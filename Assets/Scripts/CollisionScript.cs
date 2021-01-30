@@ -21,10 +21,11 @@ public class CollisionScript : MonoBehaviour
     }
     public void OnTriggerEnter(Collider other)
     {
-        if (other.gameObject.tag == "Enemey")
+        if (other.gameObject.tag == "Enemy")
         {
             Debug.Log("Ive been hit spongebob me boy");
         }
     }
+    
 
 }

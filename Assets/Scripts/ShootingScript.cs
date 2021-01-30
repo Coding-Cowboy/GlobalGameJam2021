@@ -85,4 +85,14 @@ public class ShootingScript : MonoBehaviour
         else if (collision.collider.tag != "Player")
             Destroy(gameObject);//destroy self regardless
     }
+    public void OnControllerColliderHit(ControllerColliderHit hit)
+    {
+        Debug.Log("Me ho eyoi");
+        if (hit.gameObject.tag == "Enemy")
+        {
+            Destroy(hit.gameObject);
+        }
+        if (hit.gameObject.tag != "Player")
+            Destroy(gameObject);//destroy self regardless
+    }
 }

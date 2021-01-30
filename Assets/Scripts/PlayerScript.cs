@@ -70,7 +70,8 @@ public class PlayerScript : MonoBehaviour
         }
 
         //Check for if both w and a are pressed for rotation
-        gameObject.transform.position = Position;
+        //gameObject.transform.position = Position;
+        GetComponent<CharacterController>().Move(Position-transform.position);
     }
     private void FireInputs()
     {
