@@ -27,6 +27,7 @@ public class PlayerScript : MonoBehaviour
     public float shootCooldown = 0.7f;
     bool canShoot = true;
     public AudioClip shootSoundEffect;
+    public float shootSoundVolume = 0.7f;
     HeartManager heartManager;
 
     // Start is called before the first frame update
@@ -143,7 +144,7 @@ public class PlayerScript : MonoBehaviour
             GameObject NewBullet = Instantiate(BulletPrefab, Barrel.transform.position, Barrel.transform.rotation);
             NewBullet.transform.eulerAngles = new Vector3(0, directionAngle, 0);
             NewBullet.GetComponent<ShootingScript>().fire(BulletSpeed);
-            SoundEffectScript.PlaySoundEffect(transform, shootSoundEffect); // sound FX
+            SoundEffectScript.PlaySoundEffect(transform, shootSoundEffect, shootSoundVolume); // sound FX
 
             // Shooting cooldown
             canShoot = false;
