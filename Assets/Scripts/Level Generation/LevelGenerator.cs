@@ -7,11 +7,26 @@ public class LevelGenerator : MonoBehaviour
 {
     public float gridSize = 20.5f / 7.0f; //2.92857142f
     public int rows = 7, cols = 7;
+    public GameObject playerPrefab;
+    public GameObject goalPrefab;
     public GameObject deadEnd;
     public GameObject straight;
     public GameObject turn;
     public GameObject tee;
     public GameObject cross;
+
+    public bool debugMode = false;
+    public GameObject debugDeadEnd;
+    public GameObject debugStraight;
+    public GameObject debugTurn;
+    public GameObject debugTee;
+    public GameObject debugCross;
+
+    private int minCompletionDistance;
+    private int startRow;
+    private int startCol;
+    private int endRow;
+    private int endCol;
 
     private class MazeTile
     {
@@ -22,6 +37,8 @@ public class LevelGenerator : MonoBehaviour
             right = false;
             down = false;
         }
+
+        public GameObject tileGameObject;
         public bool left, up, right, down;
     }
 
@@ -45,7 +62,6 @@ public class LevelGenerator : MonoBehaviour
             for (int j = 0; j < walls[1][i].Length; j++)
                 walls[1][i][j] = true;
         }
-        //walls[0][0][6] = false;
 
         ISet<System.Tuple<int, int>> squares = new HashSet<System.Tuple<int, int>>();
         ISet<System.Tuple<int, int, int>> candidateWalls = new HashSet<System.Tuple<int, int, int>>();
@@ -113,6 +129,7 @@ public class LevelGenerator : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
+        minCompletionDistance = (int)(Mathf.Min(rows, cols) / 2 + 0.5f);
         wallData = GetWallData();
         tiles = new MazeTile[rows][];
         for (int i = 0; i < rows; i++)
@@ -121,40 +138,6 @@ public class LevelGenerator : MonoBehaviour
             for (int j = 0; j < cols; j++)
             {
                 tiles[i][j] = new MazeTile();
-            }
-        }
-
-        //traverse vertically
-        for (int i = 0; i < wallData[0].Length; i++)
-        {
-            int j = 0;
-            while (j < wallData[0][i].Length)
-            {
-                while (j < wallData[0][i].Length && !wallData[0][i][j]) j++;
-                int wallStart = j;
-                while (j < wallData[0][i].Length && wallData[0][i][j]) j++;
-                int wallEnd = j;
-                if (wallStart < wallData[0][i].Length)
-                {
-                    CreateHorizontalWall(i, wallStart, wallEnd);
-                }
-            }
-        }
-
-        //traverse horizontally
-        for (int i = 0; i < wallData[1][0].Length; i++)
-        {
-            int j = 0;
-            while (j < wallData[1].Length)
-            {
-                while (j < wallData[1].Length && !wallData[1][j][i]) j++;
-                int wallStart = j;
-                while (j < wallData[1].Length && wallData[1][j][i]) j++;
-                int wallEnd = j;
-                if (wallStart < wallData[1].Length)
-                {
-                    CreateVerticalWall(i, wallStart, wallEnd);
-                }
             }
         }
 
@@ -216,9 +199,11 @@ public class LevelGenerator : MonoBehaviour
                         {
                             //do nothing
                         }
+                        tiles[i][j].tileGameObject = spawnedPiece;
                         break;
                     case 2:
                         //straight
+                        spawnedPiece = null;
                         if (left && right)
                         {
                             spawnedPiece = Object.Instantiate(straight, new Vector3(j * gridSize, 0, i * gridSize), new Quaternion());
@@ -248,44 +233,165 @@ public class LevelGenerator : MonoBehaviour
                         {
                             spawnedPiece = Object.Instantiate(turn, new Vector3(j * gridSize, 0, i * gridSize), new Quaternion());
                         }
+                        tiles[i][j].tileGameObject = spawnedPiece;
                         break;
                     case 3:
+                        spawnedPiece = Object.Instantiate(tee, new Vector3(j * gridSize, 0, i * gridSize), new Quaternion());
                         //tee
                         if (down && left && up)
                         {
-                            spawnedPiece = Object.Instantiate(tee, new Vector3(j * gridSize, 0, i * gridSize), new Quaternion());
                             spawnedPiece.transform.Rotate(new Vector3(0, 90.0f, 0));
                         }
                         else if (left && up && right)
                         {
-                            spawnedPiece = Object.Instantiate(tee, new Vector3(j * gridSize, 0, i * gridSize), new Quaternion());
                             spawnedPiece.transform.Rotate(new Vector3(0, 180.0f, 0));
                         }
                         else if (up && right && down)
                         {
-                            spawnedPiece = Object.Instantiate(tee, new Vector3(j * gridSize, 0, i * gridSize), new Quaternion());
                             spawnedPiece.transform.Rotate(new Vector3(0, 270.0f, 0));
                         }
                         else if (right && down && left)
                         {
-                            spawnedPiece = Object.Instantiate(tee, new Vector3(j * gridSize, 0, i * gridSize), new Quaternion());
+                            //do nothing
                         }
+                        tiles[i][j].tileGameObject = spawnedPiece;
                         break;
                     case 4:
                         //cross
                         spawnedPiece = Object.Instantiate(cross, new Vector3(j * gridSize, 0, i * gridSize), new Quaternion());
+                        tiles[i][j].tileGameObject = spawnedPiece;
                         break;
                     default:
                         Debug.Log(numOutlets);
                         break;
                 }
+
+                if (debugMode == true)
+                {
+                    float debugGridSize = 2.5f;
+                    switch (numOutlets)
+                    {
+                        case 1:
+                            //dead end
+                            spawnedPiece = Object.Instantiate(debugDeadEnd, new Vector3(j * debugGridSize, 15, i * debugGridSize), new Quaternion());
+                            if (left)
+                            {
+                                spawnedPiece.transform.Rotate(new Vector3(0, 90.0f, 0));
+                            }
+                            else if (up)
+                            {
+                                spawnedPiece.transform.Rotate(new Vector3(0, 180.0f, 0));
+                            }
+                            else if (right)
+                            {
+                                spawnedPiece.transform.Rotate(new Vector3(0, 270.0f, 0));
+                            }
+                            else if (down)
+                            {
+                                //do nothing
+                            }
+                            break;
+                        case 2:
+                            //straight
+                            if (left && right)
+                            {
+                                spawnedPiece = Object.Instantiate(debugStraight, new Vector3(j * debugGridSize, 15, i * debugGridSize), new Quaternion());
+                                spawnedPiece.transform.Rotate(new Vector3(0, 90.0f, 0));
+                            }
+                            else if (up && down)
+                            {
+                                spawnedPiece = Object.Instantiate(debugStraight, new Vector3(j * debugGridSize, 15, i * debugGridSize), new Quaternion());
+                            }
+                            //turn
+                            else if (left && up)
+                            {
+                                spawnedPiece = Object.Instantiate(debugTurn, new Vector3(j * debugGridSize, 15, i * debugGridSize), new Quaternion());
+                                spawnedPiece.transform.Rotate(new Vector3(0, 90.0f, 0));
+                            }
+                            else if (up && right)
+                            {
+                                spawnedPiece = Object.Instantiate(debugTurn, new Vector3(j * debugGridSize, 15, i * debugGridSize), new Quaternion());
+                                spawnedPiece.transform.Rotate(new Vector3(0, 180.0f, 0));
+                            }
+                            else if (right && down)
+                            {
+                                spawnedPiece = Object.Instantiate(debugTurn, new Vector3(j * debugGridSize, 15, i * debugGridSize), new Quaternion());
+                                spawnedPiece.transform.Rotate(new Vector3(0, 270.0f, 0));
+                            }
+                            else if (down && left)
+                            {
+                                spawnedPiece = Object.Instantiate(debugTurn, new Vector3(j * debugGridSize, 15, i * debugGridSize), new Quaternion());
+                            }
+                            break;
+                        case 3:
+                            //tee
+                            if (down && left && up)
+                            {
+                                spawnedPiece = Object.Instantiate(debugTee, new Vector3(j * debugGridSize, 15, i * debugGridSize), new Quaternion());
+                                spawnedPiece.transform.Rotate(new Vector3(0, 90.0f, 0));
+                            }
+                            else if (left && up && right)
+                            {
+                                spawnedPiece = Object.Instantiate(debugTee, new Vector3(j * debugGridSize, 15, i * debugGridSize), new Quaternion());
+                                spawnedPiece.transform.Rotate(new Vector3(0, 180.0f, 0));
+                            }
+                            else if (up && right && down)
+                            {
+                                spawnedPiece = Object.Instantiate(debugTee, new Vector3(j * debugGridSize, 15, i * debugGridSize), new Quaternion());
+                                spawnedPiece.transform.Rotate(new Vector3(0, 270.0f, 0));
+                            }
+                            else if (right && down && left)
+                            {
+                                spawnedPiece = Object.Instantiate(debugTee, new Vector3(j * debugGridSize, 15, i * debugGridSize), new Quaternion());
+                            }
+                            break;
+                        case 4:
+                            //cross
+                            spawnedPiece = Object.Instantiate(debugCross, new Vector3(j * debugGridSize, 15, i * debugGridSize), new Quaternion());
+                            break;
+                        default:
+                            Debug.Log(numOutlets);
+                            break;
+                    }
+                }
             }
         }
+
+        //generate the start and end
+        //make sure that they are a certain manhattan distance apart
+        endRow = Random.Range(0, rows - 1);
+        endCol = Random.Range(0, cols - 1);
+        while (
+                (tiles[endRow][endCol].left == true ? 1 : 0) +
+                (tiles[endRow][endCol].up == true ? 1 : 0) +
+                (tiles[endRow][endCol].right == true ? 1 : 0) +
+                (tiles[endRow][endCol].down == true ? 1 : 0)
+                != 1
+            )
+        {
+            endRow = Random.Range(0, rows - 1);
+            endCol = Random.Range(0, cols - 1);
+        }
+        Debug.Log("End Row: " + endRow + "End Col" + endCol);
+
+        startRow = Random.Range(0, rows - 1);
+        startCol = Random.Range(0, cols - 1);
+        while (calcManhattanDistance(startRow, startCol, endRow, endCol) < minCompletionDistance)
+        {
+            startRow = Random.Range(0, rows - 1);
+            startCol = Random.Range(0, cols - 1);
+        }
+        Debug.Log("Start Row: " + startRow + "Start Col" + startCol);
+
+        Vector3 goalPosition = tiles[endRow][endCol].tileGameObject.transform.position;
+        Quaternion goalRotation = tiles[endRow][endCol].tileGameObject.transform.rotation;
+        Destroy(tiles[endRow][endCol].tileGameObject);
+
+        tiles[endRow][endCol].tileGameObject = Object.Instantiate(goalPrefab, goalPosition, goalRotation);
     }
 
-    // Update is called once per frame
-    void Update()
+    private int calcManhattanDistance(int x1, int y1, int x2, int y2)
     {
-
+        return (x2 - x1) + (y2 - y1);
     }
 }
