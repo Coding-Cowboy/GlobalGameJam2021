@@ -133,7 +133,7 @@ public class PlayerScript : MonoBehaviour
     private void FireInputs()
     {
         // Jump includes space, Z, and joystick trigger
-        if ((Input.GetButtonDown("Fire1") || Input.GetAxisRaw("Fire1") > 0.4f) && canShoot)
+        if ((Input.GetButtonDown("Fire1") || Input.GetAxisRaw("FireTrigger") > 0.4f) && canShoot)
         {
             GameObject NewBullet = Instantiate(BulletPrefab, Barrel.transform.position, Barrel.transform.rotation);
             NewBullet.transform.eulerAngles = new Vector3(0, directionAngle, 0);
