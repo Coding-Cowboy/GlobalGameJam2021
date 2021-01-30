@@ -36,13 +36,14 @@ public class SoundEffectScript : MonoBehaviour
         played = true;
     }
 
-    public static void PlaySoundEffect(Transform parent, AudioClip clip)
+    public static void PlaySoundEffect(Transform parent, AudioClip clip, float volume)
     {
         GameObject soundMaker = new GameObject("SoundEffect");
         soundMaker.transform.position = parent.position;
         soundMaker.transform.parent = parent;
         SoundEffectScript source = soundMaker.AddComponent<SoundEffectScript>();
         source.clip = clip;
+        source.source.volume = volume;
         source.Play();
     }
 }
