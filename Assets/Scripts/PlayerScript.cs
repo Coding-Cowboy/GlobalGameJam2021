@@ -91,40 +91,6 @@ public class PlayerScript : MonoBehaviour
                 audioSource.Stop();
         }
 
-        /*if (Input.GetAxisRaw("Horizontal") < -0.4f)
-        {
-            PreviousDirection = DirectionFacing;
-            Position.x -= MovementSpeed * Time.deltaTime;
-            GoalRotation = new Vector3(0, 270, 0);
-            DirectionFacing = Face.Left;
-            isMoving = true;
-        }
-        if (Input.GetAxisRaw("Horizontal") > 0.4f)
-        {
-            PreviousDirection = DirectionFacing;
-            Position.x += MovementSpeed * Time.deltaTime;
-            GoalRotation = new Vector3(0, 90, 0);
-            DirectionFacing = Face.Right;
-            isMoving = true;
-        }
-        if (Input.GetAxisRaw("Vertical") > 0.4f)
-        {
-            PreviousDirection = DirectionFacing;
-            Position.z += MovementSpeed * Time.deltaTime;
-            //Set the rotation to 0,0,0 since start
-            GoalRotation = new Vector3(0, 0, 0);
-            DirectionFacing = Face.Forward;
-            isMoving = true;
-        }
-        if (Input.GetAxisRaw("Vertical") < -0.4f)
-        {
-            PreviousDirection = DirectionFacing;
-            Position.z -= MovementSpeed * Time.deltaTime;
-            GoalRotation = new Vector3(0, -180, 0);
-            DirectionFacing = Face.Backward;
-            isMoving = true;
-        }*/
-
         AC.SetBool("IsMoving", isMoving);
         //Check for if both w and a are pressed for rotation
         //gameObject.transform.position = Position;
@@ -149,63 +115,12 @@ public class PlayerScript : MonoBehaviour
             // Shooting cooldown
             canShoot = false;
             Invoke("EnableShooting", shootCooldown);
-
-            /*switch(DirectionFacing)
-            {
-                case Face.Forward:
-                        //Create the bullet for element i
-                        //Give the NewBullet the Prefab for a bullet, the barrel transform position and the barrel transform rotation
-                        //Set the Bullet eulerAngle to face the right way when firing
-                        NewBullet.transform.eulerAngles = new Vector3(0, 0, 0);
-                        NewBullet.GetComponent<ShootingScript>().fire( "Forward", BulletSpeed);
-                    break;
-                case Face.Backward:
-                    for (int i = 0; i < NumberOfBullets; i++)
-                    {
-                        //Create the bullet for element i
-                        //Give the NewBullet the Prefab for a bullet, the barrel transform position and the barrel transform rotation
-                        //Set the Bullet eulerAngle to face the right way when firing
-                        NewBullet.transform.eulerAngles = new Vector3(0, 180, 0);
-                        NewBullet.GetComponent<ShootingScript>().fire("Backward", BulletSpeed);
-                    }
-                    break;
-                case Face.Left:
-                    for (int i = 0; i < NumberOfBullets; i++)
-                    {
-                        //Create the bullet for element i
-                        //Give the NewBullet the Prefab for a bullet, the barrel transform position and the barrel transform rotation
-                        //Set the Bullet eulerAngle to face the right way when firing
-                        NewBullet.transform.eulerAngles = new Vector3(0, 270, 0);
-                        NewBullet.GetComponent<ShootingScript>().fire("Left", BulletSpeed);
-                    }
-                    break;
-                case Face.Right:
-                    for (int i = 0; i < NumberOfBullets; i++)
-                    {
-                        //Create the bullet for element i
-                        //Give the NewBullet the Prefab for a bullet, the barrel transform position and the barrel transform rotation
-                        //Set the Bullet eulerAngle to face the right way when firing
-                        NewBullet.transform.eulerAngles = new Vector3(0, 90, 0);
-                        NewBullet.GetComponent<ShootingScript>().fire("Right", BulletSpeed);
-                    }
-                    break;
-            }*/
         }
     }
 
     public void OnControllerColliderHit(ControllerColliderHit hit)
     {
-        ////if (hit.gameObject.tag == "Enemy")
-        //if (hit.gameObject.name == "Spider" && !isHit)
-        //{
-        //    HitCount--;
-        //    //take the RigidBody from teh enemy and apply the force of a less powerful shotgun
-        //    //hit.gameObject.GetComponent<Rigidbody>().AddForce(transform.forward * BulletSpeed/2);
-        //    hit.gameObject.GetComponent<Rigidbody>().velocity = -hit.gameObject.GetComponent<Rigidbody>().velocity * 1.5f;
-        //    //set flag and disable collider
-        //    isHit = true;
-        //    Debug.Log("Ive been hit spongebob me boy");
-        //}
+      
     }
     public void OnTriggerEnter(Collider other)
     {
@@ -213,11 +128,18 @@ public class PlayerScript : MonoBehaviour
         {
             HitCount--;
             //take the RigidBody from teh enemy and apply the force of a less powerful shotgun
-            //hit.gameObject.GetComponent<Rigidbody>().AddForce(transform.forward * BulletSpeed/2);
             other.gameObject.GetComponent<Rigidbody>().AddForce(-other.gameObject.transform.right * BulletSpeed/5);
             //set flag and disable collider
             isHit = true;
             Debug.Log("Ive been hit spongebob me boy");
+            
+        }
+        else if (other.gameObject.tag == "MedKit")
+        {
+            Debug.Log($"Health before pickup:{HitCount}");
+            HitCount = 3;
+            Debug.Log($"Health after pickup:{HitCount}");
+            Destroy(other.gameObject);
         }
     }
 
@@ -227,12 +149,12 @@ public class PlayerScript : MonoBehaviour
         {
             HitCount--;
             //take the RigidBody from teh enemy and apply the force of a less powerful shotgun
-            //hit.gameObject.GetComponent<Rigidbody>().AddForce(transform.forward * BulletSpeed/2);
             other.gameObject.GetComponent<Rigidbody>().AddForce(-other.gameObject.transform.right * BulletSpeed / 5);
             //set flag and disable collider
             isHit = true;
             Debug.Log("Ive been hit spongebob me boy");
         }
+        
     }
 
     void EnableShooting()

@@ -609,7 +609,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   PlayerCamera: {fileID: 4295950877532333936}
-  MovementSpeed: 10
+  MovementSpeed: 5.5
   Body: {fileID: 522717495138308928}
   Barrel: {fileID: 6645295725895872049}
   NumberOfBullets: 5
