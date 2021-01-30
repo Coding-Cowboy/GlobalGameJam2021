@@ -152,125 +152,38 @@ public class LevelGenerator : MonoBehaviour
         {
             for (int j = 0; j < tiles[i].Length; j++)
             {
-                bool left = tiles[i][j].left;
-                bool up = tiles[i][j].up;
-                bool right = tiles[i][j].right;
-                bool down = tiles[i][j].down;
-                int numOutlets =
-                    (left == true ? 1 : 0) +
-                    (up == true ? 1 : 0) +
-                    (right == true ? 1 : 0) +
-                    (down == true ? 1 : 0);
-
-                GameObject spawnedPiece;
-
-                switch (numOutlets)
-                {
-                    case 1:
-                        //dead end
-                        spawnedPiece = UnityEngine.Object.Instantiate(deadEnd[UnityEngine.Random.Range(0, deadEnd.Length)], new Vector3(j * gridSize, 0, i * gridSize), new Quaternion());
-                        if (left)
-                        {
-                            spawnedPiece.transform.Rotate(new Vector3(0, 90.0f, 0));
-                        }
-                        else if (up)
-                        {
-                            spawnedPiece.transform.Rotate(new Vector3(0, 180.0f, 0));
-                        }
-                        else if (right)
-                        {
-                            spawnedPiece.transform.Rotate(new Vector3(0, 270.0f, 0));
-                        }
-                        else if (down)
-                        {
-                            //do nothing
-                        }
-                        tiles[i][j].tileGameObject = spawnedPiece;
-                        break;
-                    case 2:
-                        //straight
-                        spawnedPiece = null;
-                        if (left && right)
-                        {
-                            spawnedPiece = UnityEngine.Object.Instantiate(straight[UnityEngine.Random.Range(0, straight.Length)], new Vector3(j * gridSize, 0, i * gridSize), new Quaternion());
-                            spawnedPiece.transform.Rotate(new Vector3(0, 90.0f, 0));
-                        }
-                        else if (up && down)
-                        {
-                            spawnedPiece = UnityEngine.Object.Instantiate(straight[UnityEngine.Random.Range(0, straight.Length)], new Vector3(j * gridSize, 0, i * gridSize), new Quaternion());
-                        }
-                        //turn
-                        else if (left && up)
-                        {
-                            spawnedPiece = UnityEngine.Object.Instantiate(turn[UnityEngine.Random.Range(0, turn.Length)], new Vector3(j * gridSize, 0, i * gridSize), new Quaternion());
-                            spawnedPiece.transform.Rotate(new Vector3(0, 90.0f, 0));
-                        }
-                        else if (up && right)
-                        {
-                            spawnedPiece = UnityEngine.Object.Instantiate(turn[UnityEngine.Random.Range(0, turn.Length)], new Vector3(j * gridSize, 0, i * gridSize), new Quaternion());
-                            spawnedPiece.transform.Rotate(new Vector3(0, 180.0f, 0));
-                        }
-                        else if (right && down)
-                        {
-                            spawnedPiece = UnityEngine.Object.Instantiate(turn[UnityEngine.Random.Range(0, turn.Length)], new Vector3(j * gridSize, 0, i * gridSize), new Quaternion());
-                            spawnedPiece.transform.Rotate(new Vector3(0, 270.0f, 0));
-                        }
-                        else if (down && left)
-                        {
-                            spawnedPiece = UnityEngine.Object.Instantiate(turn[UnityEngine.Random.Range(0, turn.Length)], new Vector3(j * gridSize, 0, i * gridSize), new Quaternion());
-                        }
-                        tiles[i][j].tileGameObject = spawnedPiece;
-                        break;
-                    case 3:
-                        spawnedPiece = UnityEngine.Object.Instantiate(tee[UnityEngine.Random.Range(0, tee.Length)], new Vector3(j * gridSize, 0, i * gridSize), new Quaternion());
-                        //tee
-                        if (down && left && up)
-                        {
-                            spawnedPiece.transform.Rotate(new Vector3(0, 90.0f, 0));
-                        }
-                        else if (left && up && right)
-                        {
-                            spawnedPiece.transform.Rotate(new Vector3(0, 180.0f, 0));
-                        }
-                        else if (up && right && down)
-                        {
-                            spawnedPiece.transform.Rotate(new Vector3(0, 270.0f, 0));
-                        }
-                        else if (right && down && left)
-                        {
-                            //do nothing
-                        }
-                        tiles[i][j].tileGameObject = spawnedPiece;
-                        break;
-                    case 4:
-                        //cross
-                        spawnedPiece = UnityEngine.Object.Instantiate(cross[UnityEngine.Random.Range(0, cross.Length)], new Vector3(j * gridSize, 0, i * gridSize), new Quaternion());
-                        tiles[i][j].tileGameObject = spawnedPiece;
-                        break;
-                    default:
-                        Debug.Log(numOutlets);
-                        break;
-                }
+                GameObject spawnedPiece = spawnTile(i, j);
 
                 if (debugMode == true)
                 {
+                    bool left = tiles[i][j].left;
+                    bool up = tiles[i][j].up;
+                    bool right = tiles[i][j].right;
+                    bool down = tiles[i][j].down;
+                    int numOutlets =
+                        (left == true ? 1 : 0) +
+                        (up == true ? 1 : 0) +
+                        (right == true ? 1 : 0) +
+                        (down == true ? 1 : 0);
+                    GameObject debugSpawnedPiece = null;
+
                     float debugGridSize = 2.5f;
                     switch (numOutlets)
                     {
                         case 1:
                             //dead end
-                            spawnedPiece = UnityEngine.Object.Instantiate(debugDeadEnd, new Vector3(j * debugGridSize, 15, i * debugGridSize), new Quaternion());
+                            debugSpawnedPiece = UnityEngine.Object.Instantiate(debugDeadEnd, new Vector3(j * debugGridSize, 15, i * debugGridSize), new Quaternion());
                             if (left)
                             {
-                                spawnedPiece.transform.Rotate(new Vector3(0, 90.0f, 0));
+                                debugSpawnedPiece.transform.Rotate(new Vector3(0, 90.0f, 0));
                             }
                             else if (up)
                             {
-                                spawnedPiece.transform.Rotate(new Vector3(0, 180.0f, 0));
+                                debugSpawnedPiece.transform.Rotate(new Vector3(0, 180.0f, 0));
                             }
                             else if (right)
                             {
-                                spawnedPiece.transform.Rotate(new Vector3(0, 270.0f, 0));
+                                debugSpawnedPiece.transform.Rotate(new Vector3(0, 270.0f, 0));
                             }
                             else if (down)
                             {
@@ -281,59 +194,59 @@ public class LevelGenerator : MonoBehaviour
                             //straight
                             if (left && right)
                             {
-                                spawnedPiece = UnityEngine.Object.Instantiate(debugStraight, new Vector3(j * debugGridSize, 15, i * debugGridSize), new Quaternion());
-                                spawnedPiece.transform.Rotate(new Vector3(0, 90.0f, 0));
+                                debugSpawnedPiece = UnityEngine.Object.Instantiate(debugStraight, new Vector3(j * debugGridSize, 15, i * debugGridSize), new Quaternion());
+                                debugSpawnedPiece.transform.Rotate(new Vector3(0, 90.0f, 0));
                             }
                             else if (up && down)
                             {
-                                spawnedPiece = UnityEngine.Object.Instantiate(debugStraight, new Vector3(j * debugGridSize, 15, i * debugGridSize), new Quaternion());
+                                debugSpawnedPiece = UnityEngine.Object.Instantiate(debugStraight, new Vector3(j * debugGridSize, 15, i * debugGridSize), new Quaternion());
                             }
                             //turn
                             else if (left && up)
                             {
-                                spawnedPiece = UnityEngine.Object.Instantiate(debugTurn, new Vector3(j * debugGridSize, 15, i * debugGridSize), new Quaternion());
-                                spawnedPiece.transform.Rotate(new Vector3(0, 90.0f, 0));
+                                debugSpawnedPiece = UnityEngine.Object.Instantiate(debugTurn, new Vector3(j * debugGridSize, 15, i * debugGridSize), new Quaternion());
+                                debugSpawnedPiece.transform.Rotate(new Vector3(0, 90.0f, 0));
                             }
                             else if (up && right)
                             {
-                                spawnedPiece = UnityEngine.Object.Instantiate(debugTurn, new Vector3(j * debugGridSize, 15, i * debugGridSize), new Quaternion());
-                                spawnedPiece.transform.Rotate(new Vector3(0, 180.0f, 0));
+                                debugSpawnedPiece = UnityEngine.Object.Instantiate(debugTurn, new Vector3(j * debugGridSize, 15, i * debugGridSize), new Quaternion());
+                                debugSpawnedPiece.transform.Rotate(new Vector3(0, 180.0f, 0));
                             }
                             else if (right && down)
                             {
-                                spawnedPiece = UnityEngine.Object.Instantiate(debugTurn, new Vector3(j * debugGridSize, 15, i * debugGridSize), new Quaternion());
-                                spawnedPiece.transform.Rotate(new Vector3(0, 270.0f, 0));
+                                debugSpawnedPiece = UnityEngine.Object.Instantiate(debugTurn, new Vector3(j * debugGridSize, 15, i * debugGridSize), new Quaternion());
+                                debugSpawnedPiece.transform.Rotate(new Vector3(0, 270.0f, 0));
                             }
                             else if (down && left)
                             {
-                                spawnedPiece = UnityEngine.Object.Instantiate(debugTurn, new Vector3(j * debugGridSize, 15, i * debugGridSize), new Quaternion());
+                                debugSpawnedPiece = UnityEngine.Object.Instantiate(debugTurn, new Vector3(j * debugGridSize, 15, i * debugGridSize), new Quaternion());
                             }
                             break;
                         case 3:
                             //tee
                             if (down && left && up)
                             {
-                                spawnedPiece = UnityEngine.Object.Instantiate(debugTee, new Vector3(j * debugGridSize, 15, i * debugGridSize), new Quaternion());
-                                spawnedPiece.transform.Rotate(new Vector3(0, 90.0f, 0));
+                                debugSpawnedPiece = UnityEngine.Object.Instantiate(debugTee, new Vector3(j * debugGridSize, 15, i * debugGridSize), new Quaternion());
+                                debugSpawnedPiece.transform.Rotate(new Vector3(0, 90.0f, 0));
                             }
                             else if (left && up && right)
                             {
-                                spawnedPiece = UnityEngine.Object.Instantiate(debugTee, new Vector3(j * debugGridSize, 15, i * debugGridSize), new Quaternion());
-                                spawnedPiece.transform.Rotate(new Vector3(0, 180.0f, 0));
+                                debugSpawnedPiece = UnityEngine.Object.Instantiate(debugTee, new Vector3(j * debugGridSize, 15, i * debugGridSize), new Quaternion());
+                                debugSpawnedPiece.transform.Rotate(new Vector3(0, 180.0f, 0));
                             }
                             else if (up && right && down)
                             {
-                                spawnedPiece = UnityEngine.Object.Instantiate(debugTee, new Vector3(j * debugGridSize, 15, i * debugGridSize), new Quaternion());
-                                spawnedPiece.transform.Rotate(new Vector3(0, 270.0f, 0));
+                                debugSpawnedPiece = UnityEngine.Object.Instantiate(debugTee, new Vector3(j * debugGridSize, 15, i * debugGridSize), new Quaternion());
+                                debugSpawnedPiece.transform.Rotate(new Vector3(0, 270.0f, 0));
                             }
                             else if (right && down && left)
                             {
-                                spawnedPiece = UnityEngine.Object.Instantiate(debugTee, new Vector3(j * debugGridSize, 15, i * debugGridSize), new Quaternion());
+                                debugSpawnedPiece = UnityEngine.Object.Instantiate(debugTee, new Vector3(j * debugGridSize, 15, i * debugGridSize), new Quaternion());
                             }
                             break;
                         case 4:
                             //cross
-                            spawnedPiece = UnityEngine.Object.Instantiate(debugCross, new Vector3(j * debugGridSize, 15, i * debugGridSize), new Quaternion());
+                            debugSpawnedPiece = UnityEngine.Object.Instantiate(debugCross, new Vector3(j * debugGridSize, 15, i * debugGridSize), new Quaternion());
                             break;
                         default:
                             Debug.Log(numOutlets);
@@ -369,12 +282,19 @@ public class LevelGenerator : MonoBehaviour
         }
         Debug.Log("Start Row: " + startRow + "Start Col" + startCol);
 
+        //spawn goal tile
         Vector3 goalPosition = tiles[endRow][endCol].tileGameObject.transform.position;
         Quaternion goalRotation = tiles[endRow][endCol].tileGameObject.transform.rotation;
         Destroy(tiles[endRow][endCol].tileGameObject);
 
         tiles[endRow][endCol].tileGameObject = UnityEngine.Object.Instantiate(goalPrefab, goalPosition, goalRotation);
 
+        //make player spawn tile safe
+        Destroy(tiles[startRow][startCol].tileGameObject);
+        spawnSafeTile(startRow, startCol);
+
+
+        //spawn player
         Vector3 playerPosition = new Vector3(startCol * gridSize, 0, startRow * gridSize);
         Vector3 spawnOffset = new Vector3(0.0f, 1.03f, 0.0f);
         player = UnityEngine.Object.Instantiate(playerPrefab, playerPosition + spawnOffset, new Quaternion());
@@ -388,6 +308,216 @@ public class LevelGenerator : MonoBehaviour
         // {
         //     Debug.Log("Tile: " + i + " " + "Right: " + tiles[i][3].right + " " + "Left: " + tiles[i][3].left);
         // }
+    }
+
+    GameObject spawnTile(int i, int j)
+    {
+        bool left = tiles[i][j].left;
+        bool up = tiles[i][j].up;
+        bool right = tiles[i][j].right;
+        bool down = tiles[i][j].down;
+        int numOutlets =
+            (left == true ? 1 : 0) +
+            (up == true ? 1 : 0) +
+            (right == true ? 1 : 0) +
+            (down == true ? 1 : 0);
+
+        GameObject spawnedPiece = null;
+
+        switch (numOutlets)
+        {
+            case 1:
+                //dead end
+                spawnedPiece = UnityEngine.Object.Instantiate(deadEnd[UnityEngine.Random.Range(0, deadEnd.Length)], new Vector3(j * gridSize, 0, i * gridSize), new Quaternion());
+                if (left)
+                {
+                    spawnedPiece.transform.Rotate(new Vector3(0, 90.0f, 0));
+                }
+                else if (up)
+                {
+                    spawnedPiece.transform.Rotate(new Vector3(0, 180.0f, 0));
+                }
+                else if (right)
+                {
+                    spawnedPiece.transform.Rotate(new Vector3(0, 270.0f, 0));
+                }
+                else if (down)
+                {
+                    //do nothing
+                }
+                tiles[i][j].tileGameObject = spawnedPiece;
+                break;
+            case 2:
+                //straight
+                spawnedPiece = null;
+                if (left && right)
+                {
+                    spawnedPiece = UnityEngine.Object.Instantiate(straight[UnityEngine.Random.Range(0, straight.Length)], new Vector3(j * gridSize, 0, i * gridSize), new Quaternion());
+                    spawnedPiece.transform.Rotate(new Vector3(0, 90.0f, 0));
+                }
+                else if (up && down)
+                {
+                    spawnedPiece = UnityEngine.Object.Instantiate(straight[UnityEngine.Random.Range(0, straight.Length)], new Vector3(j * gridSize, 0, i * gridSize), new Quaternion());
+                }
+                //turn
+                else if (left && up)
+                {
+                    spawnedPiece = UnityEngine.Object.Instantiate(turn[UnityEngine.Random.Range(0, turn.Length)], new Vector3(j * gridSize, 0, i * gridSize), new Quaternion());
+                    spawnedPiece.transform.Rotate(new Vector3(0, 90.0f, 0));
+                }
+                else if (up && right)
+                {
+                    spawnedPiece = UnityEngine.Object.Instantiate(turn[UnityEngine.Random.Range(0, turn.Length)], new Vector3(j * gridSize, 0, i * gridSize), new Quaternion());
+                    spawnedPiece.transform.Rotate(new Vector3(0, 180.0f, 0));
+                }
+                else if (right && down)
+                {
+                    spawnedPiece = UnityEngine.Object.Instantiate(turn[UnityEngine.Random.Range(0, turn.Length)], new Vector3(j * gridSize, 0, i * gridSize), new Quaternion());
+                    spawnedPiece.transform.Rotate(new Vector3(0, 270.0f, 0));
+                }
+                else if (down && left)
+                {
+                    spawnedPiece = UnityEngine.Object.Instantiate(turn[UnityEngine.Random.Range(0, turn.Length)], new Vector3(j * gridSize, 0, i * gridSize), new Quaternion());
+                }
+                tiles[i][j].tileGameObject = spawnedPiece;
+                break;
+            case 3:
+                spawnedPiece = UnityEngine.Object.Instantiate(tee[UnityEngine.Random.Range(0, tee.Length)], new Vector3(j * gridSize, 0, i * gridSize), new Quaternion());
+                //tee
+                if (down && left && up)
+                {
+                    spawnedPiece.transform.Rotate(new Vector3(0, 90.0f, 0));
+                }
+                else if (left && up && right)
+                {
+                    spawnedPiece.transform.Rotate(new Vector3(0, 180.0f, 0));
+                }
+                else if (up && right && down)
+                {
+                    spawnedPiece.transform.Rotate(new Vector3(0, 270.0f, 0));
+                }
+                else if (right && down && left)
+                {
+                    //do nothing
+                }
+                tiles[i][j].tileGameObject = spawnedPiece;
+                break;
+            case 4:
+                //cross
+                spawnedPiece = UnityEngine.Object.Instantiate(cross[UnityEngine.Random.Range(0, cross.Length)], new Vector3(j * gridSize, 0, i * gridSize), new Quaternion());
+                tiles[i][j].tileGameObject = spawnedPiece;
+                break;
+            default:
+                Debug.Log(numOutlets);
+                break;
+        }
+
+        return spawnedPiece;
+    }
+
+    GameObject spawnSafeTile(int i, int j)
+    {
+        bool left = tiles[i][j].left;
+        bool up = tiles[i][j].up;
+        bool right = tiles[i][j].right;
+        bool down = tiles[i][j].down;
+        int numOutlets =
+            (left == true ? 1 : 0) +
+            (up == true ? 1 : 0) +
+            (right == true ? 1 : 0) +
+            (down == true ? 1 : 0);
+
+        GameObject spawnedPiece = null;
+
+        switch (numOutlets)
+        {
+            case 1:
+                //dead end
+                spawnedPiece = UnityEngine.Object.Instantiate(deadEnd[0], new Vector3(j * gridSize, 0, i * gridSize), new Quaternion());
+                if (left)
+                {
+                    spawnedPiece.transform.Rotate(new Vector3(0, 90.0f, 0));
+                }
+                else if (up)
+                {
+                    spawnedPiece.transform.Rotate(new Vector3(0, 180.0f, 0));
+                }
+                else if (right)
+                {
+                    spawnedPiece.transform.Rotate(new Vector3(0, 270.0f, 0));
+                }
+                else if (down)
+                {
+                    //do nothing
+                }
+                tiles[i][j].tileGameObject = spawnedPiece;
+                break;
+            case 2:
+                //straight
+                spawnedPiece = null;
+                if (left && right)
+                {
+                    spawnedPiece = UnityEngine.Object.Instantiate(straight[0], new Vector3(j * gridSize, 0, i * gridSize), new Quaternion());
+                    spawnedPiece.transform.Rotate(new Vector3(0, 90.0f, 0));
+                }
+                else if (up && down)
+                {
+                    spawnedPiece = UnityEngine.Object.Instantiate(straight[0], new Vector3(j * gridSize, 0, i * gridSize), new Quaternion());
+                }
+                //turn
+                else if (left && up)
+                {
+                    spawnedPiece = UnityEngine.Object.Instantiate(turn[0], new Vector3(j * gridSize, 0, i * gridSize), new Quaternion());
+                    spawnedPiece.transform.Rotate(new Vector3(0, 90.0f, 0));
+                }
+                else if (up && right)
+                {
+                    spawnedPiece = UnityEngine.Object.Instantiate(turn[0], new Vector3(j * gridSize, 0, i * gridSize), new Quaternion());
+                    spawnedPiece.transform.Rotate(new Vector3(0, 180.0f, 0));
+                }
+                else if (right && down)
+                {
+                    spawnedPiece = UnityEngine.Object.Instantiate(turn[0], new Vector3(j * gridSize, 0, i * gridSize), new Quaternion());
+                    spawnedPiece.transform.Rotate(new Vector3(0, 270.0f, 0));
+                }
+                else if (down && left)
+                {
+                    spawnedPiece = UnityEngine.Object.Instantiate(turn[0], new Vector3(j * gridSize, 0, i * gridSize), new Quaternion());
+                }
+                tiles[i][j].tileGameObject = spawnedPiece;
+                break;
+            case 3:
+                spawnedPiece = UnityEngine.Object.Instantiate(tee[0], new Vector3(j * gridSize, 0, i * gridSize), new Quaternion());
+                //tee
+                if (down && left && up)
+                {
+                    spawnedPiece.transform.Rotate(new Vector3(0, 90.0f, 0));
+                }
+                else if (left && up && right)
+                {
+                    spawnedPiece.transform.Rotate(new Vector3(0, 180.0f, 0));
+                }
+                else if (up && right && down)
+                {
+                    spawnedPiece.transform.Rotate(new Vector3(0, 270.0f, 0));
+                }
+                else if (right && down && left)
+                {
+                    //do nothing
+                }
+                tiles[i][j].tileGameObject = spawnedPiece;
+                break;
+            case 4:
+                //cross
+                spawnedPiece = UnityEngine.Object.Instantiate(cross[0], new Vector3(j * gridSize, 0, i * gridSize), new Quaternion());
+                tiles[i][j].tileGameObject = spawnedPiece;
+                break;
+            default:
+                Debug.Log(numOutlets);
+                break;
+        }
+
+        return spawnedPiece;
     }
 
     // void Update()
