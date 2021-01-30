@@ -61,6 +61,7 @@ crashlytics-build.properties
 
 # Visual Studio Code Workspaces
 *.code-workspace
+.vscode/
 
 ./Library/**
 
