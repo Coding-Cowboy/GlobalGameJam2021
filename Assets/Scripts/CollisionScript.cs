@@ -15,17 +15,17 @@ public class CollisionScript : MonoBehaviour
     {
         
     }
-    public void OnCollisionEnter(Collision collision)
-    {
-        Debug.Log("Ive been hit spongebob me boy");
-    }
-    public void OnTriggerEnter(Collider other)
-    {
-        if (other.gameObject.tag == "Enemy")
-        {
-            Debug.Log("Ive been hit spongebob me boy");
-        }
-    }
+    //public void OnCollisionEnter(Collision collision)
+    //{
+    //    Debug.Log("Ive been hit spongebob me boy");
+    //}
+    //public void OnTriggerEnter(Collider other)
+    //{
+    //    if (other.gameObject.tag == "Enemy")
+    //    {
+    //        Debug.Log("Ive been hit spongebob me boy");
+    //    }
+    //}
     
 
 }

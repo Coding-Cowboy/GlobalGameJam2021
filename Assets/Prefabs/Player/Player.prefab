@@ -570,7 +570,11 @@ GameObject:
   - component: {fileID: 4618699986641551656}
   - component: {fileID: 4618699986641551657}
   - component: {fileID: 1116647569603246524}
+<<<<<<< Updated upstream
   - component: {fileID: 1372416059221836361}
+=======
+  - component: {fileID: 3234728908934152382}
+>>>>>>> Stashed changes
   m_Layer: 11
   m_Name: Player
   m_TagString: Player
@@ -616,11 +620,19 @@ MonoBehaviour:
     type: 3}
   BulletSpeed: 300
   HitCount: 3
+<<<<<<< Updated upstream
+=======
+  isHit: 0
+  timer: 2.5
+>>>>>>> Stashed changes
   directionAngle: 0
   AC: {fileID: 460110861540821207}
   RotationSpeed: 7
   shootCooldown: 0.7
+<<<<<<< Updated upstream
   shootSoundEffect: {fileID: 8300000, guid: 8da59d8ba252780418e8f2363e7dff99, type: 3}
+=======
+>>>>>>> Stashed changes
 --- !u!143 &1116647569603246524
 CharacterController:
   m_ObjectHideFlags: 0
@@ -639,13 +651,19 @@ CharacterController:
   m_SkinWidth: 0.08
   m_MinMoveDistance: 0.001
   m_Center: {x: 0, y: 0, z: 0}
+<<<<<<< Updated upstream
 --- !u!82 &1372416059221836361
 AudioSource:
+=======
+--- !u!136 &3234728908934152382
+CapsuleCollider:
+>>>>>>> Stashed changes
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 4618699986641551658}
+<<<<<<< Updated upstream
   m_Enabled: 1
   serializedVersion: 4
   OutputAudioMixerGroup: {fileID: 0}
@@ -735,6 +753,15 @@ AudioSource:
     m_PreInfinity: 2
     m_PostInfinity: 2
     m_RotationOrder: 4
+=======
+  m_Material: {fileID: 0}
+  m_IsTrigger: 1
+  m_Enabled: 1
+  m_Radius: 0.5406673
+  m_Height: 2.1211405
+  m_Direction: 1
+  m_Center: {x: 0, y: 0, z: 0}
+>>>>>>> Stashed changes
 --- !u!1 &4805725782110427645
 GameObject:
   m_ObjectHideFlags: 0

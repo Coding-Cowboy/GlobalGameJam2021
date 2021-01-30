@@ -14,6 +14,8 @@ public class PlayerScript : MonoBehaviour
     public GameObject BulletPrefab;
     public float BulletSpeed;//Speed of the bullets
     public int HitCount;//The amount of times that a player can be hit.
+    public bool isHit;
+    public float timer =2.5f;
     public Face DirectionFacing { get; private set; }//The state of the direction that the player is facing
     public Face PreviousDirection { get; private set; }
     public float directionAngle;
@@ -38,6 +40,8 @@ public class PlayerScript : MonoBehaviour
         FireInputs();
         EndGame();
         turn();
+        if(isHit)
+            HitCheck();
     }
 
     private void EndGame()
@@ -47,7 +51,15 @@ public class PlayerScript : MonoBehaviour
             Debug.Log("Spongebob, me boy, I am Overdosing on Ketamine");
         }
     }
-
+    public void HitCheck()
+    {
+        timer -= Time.deltaTime;
+        if(timer < 0)
+        {
+            timer = 2.5f;
+            isHit = false;
+        }
+    }
     private void MovementInputs()
     {
         bool isMoving = false;
@@ -169,12 +181,30 @@ public class PlayerScript : MonoBehaviour
 
     public void OnControllerColliderHit(ControllerColliderHit hit)
     {
+        ////if (hit.gameObject.tag == "Enemy")
+        //if (hit.gameObject.name == "Spider" && !isHit)
+        //{
+        //    HitCount--;
+        //    //take the RigidBody from teh enemy and apply the force of a less powerful shotgun
+        //    //hit.gameObject.GetComponent<Rigidbody>().AddForce(transform.forward * BulletSpeed/2);
+        //    hit.gameObject.GetComponent<Rigidbody>().velocity = -hit.gameObject.GetComponent<Rigidbody>().velocity * 1.5f;
+        //    //set flag and disable collider
+        //    isHit = true;
+        //    Debug.Log("Ive been hit spongebob me boy");
+        //}
+    }
+    public void OnTriggerEnter(Collider other)
+    {
         //if (hit.gameObject.tag == "Enemy")
-        if(hit.gameObject.name == "spider")
+        if (other.gameObject.name == "Spider" && !isHit)
         {
             HitCount--;
             //take the RigidBody from teh enemy and apply the force of a less powerful shotgun
-            hit.gameObject.GetComponent<Rigidbody>().AddForce(transform.forward * BulletSpeed/2);
+            //hit.gameObject.GetComponent<Rigidbody>().AddForce(transform.forward * BulletSpeed/2);
+            other.gameObject.GetComponent<Rigidbody>().AddForce(-other.gameObject.transform.right * BulletSpeed/5);
+            //set flag and disable collider
+            isHit = true;
+            Debug.Log("Ive been hit spongebob me boy");
         }
     }
 
