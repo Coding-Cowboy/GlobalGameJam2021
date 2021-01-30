@@ -221,7 +221,7 @@ MonoBehaviour:
     min: 0
   aerosolDensity:
     m_OverrideState: 1
-    m_Value: 0.025
+    m_Value: 0.095
     min: 0
     max: 1
   aerosolTint:
@@ -231,7 +231,7 @@ MonoBehaviour:
     showAlpha: 0
     showEyeDropper: 1
   aerosolMaximumAltitude:
-    m_OverrideState: 1
+    m_OverrideState: 0
     m_Value: 8289.296
     min: 0
   aerosolAnisotropy:
