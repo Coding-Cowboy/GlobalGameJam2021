@@ -67,10 +67,22 @@ public class ShootingScript : MonoBehaviour
     }
     private void OnTriggerEnter(Collider other)
     {
-        Debug.Log("Hit");
         if (other.tag == "Enemy")
+        {
             Destroy(other.gameObject);
-        Destroy(gameObject);//destroy self regardless
+            Destroy(gameObject);//destroy self regardless
+        }
+        else if(other.tag != "Player")
+            Destroy(gameObject);//destroy self regardless
     }
-
+    private void OnCollisionEnter(Collision collision)
+    {
+        if (collision.collider.tag == "Enemy")
+        {
+            Destroy(collision.collider.gameObject);
+            Destroy(gameObject);//destroy self regardless
+        }
+        else if (collision.collider.tag != "Player")
+            Destroy(gameObject);//destroy self regardless
+    }
 }

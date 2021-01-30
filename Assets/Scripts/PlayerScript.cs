@@ -12,6 +12,7 @@ public class PlayerScript : MonoBehaviour
     public int NumberOfBullets;//The number of bullets that we would like to spawn
     public GameObject BulletPrefab;
     public float BulletSpeed;//Speed of the bullets
+    public int HitCount;//The amount of times that a player can be hit.
     public Face DirectionFacing { get; private set; }//The state of the direction that the player is facing
     public enum Face{Forward,Backward,Left,Right};
     //public Rigidbody rb;//RigidBody of the player
@@ -27,7 +28,17 @@ public class PlayerScript : MonoBehaviour
     {
         MovementInputs();
         FireInputs();
+        EndGame();
     }
+
+    private void EndGame()
+    {
+        if(HitCount == 0)
+        {
+            Debug.Log("Spongebob, me boy, I am Overdosing on Ketamine");
+        }
+    }
+
     private void MovementInputs()
     {
         //Get the current position for the key inputs
@@ -106,6 +117,19 @@ public class PlayerScript : MonoBehaviour
                     }
                     break;
             }
+        }
+    }
+    public void OnCollisionEnter(Collision collision)
+    {
+            Debug.Log("Ive been hit spongebob me boy");
+            HitCount--;
+    }
+    public void OnTriggerEnter(Collider other)
+    {
+        if (other.gameObject.tag == "Enemey")
+        {
+            Debug.Log("Ive been hit spongebob me boy");
+            HitCount--;
         }
     }
 }
