@@ -38,7 +38,7 @@ RenderSettings:
   m_ReflectionIntensity: 1
   m_CustomReflection: {fileID: 0}
   m_Sun: {fileID: 0}
-  m_IndirectSpecularColor: {r: 0, g: 0, b: 0, a: 1}
+  m_IndirectSpecularColor: {r: 0.00006306106, g: 0.00005953647, b: 0.0000961086, a: 1}
   m_UseRadianceAmbientProbe: 0
 --- !u!157 &3
 LightmapSettings:
@@ -371,12 +371,17 @@ MonoBehaviour:
     type: 3}
   goalPrefab: {fileID: 9207646578867713205, guid: bbad1f55fb4ebdd43b03cc7ee5be88e1,
     type: 3}
-  deadEnd: {fileID: 9207646578867713205, guid: def5e8ec97abd7a498aaef949c7b0a61, type: 3}
-  straight: {fileID: 5353832025234645945, guid: 7149c4e6f91cd8e48ac2864c3545a09a,
-    type: 3}
-  turn: {fileID: 2257218152603366722, guid: f8f56f39246e2d7498f033ff8fd41ed7, type: 3}
-  tee: {fileID: 7332189296215420263, guid: cad4c8cfcd4509445986a9007e512527, type: 3}
-  cross: {fileID: 6410194610331434391, guid: e023adcac64f6b84da6f098a534f1700, type: 3}
+  deadEnd:
+  - {fileID: 9207646578867713205, guid: def5e8ec97abd7a498aaef949c7b0a61, type: 3}
+  straight:
+  - {fileID: 5353832025234645945, guid: 7149c4e6f91cd8e48ac2864c3545a09a, type: 3}
+  - {fileID: 7915685174323276915, guid: c441e78fe03ea7c4e91ca93e36796a0d, type: 3}
+  turn:
+  - {fileID: 2257218152603366722, guid: f8f56f39246e2d7498f033ff8fd41ed7, type: 3}
+  tee:
+  - {fileID: 7332189296215420263, guid: cad4c8cfcd4509445986a9007e512527, type: 3}
+  cross:
+  - {fileID: 6410194610331434391, guid: e023adcac64f6b84da6f098a534f1700, type: 3}
   debugMode: 0
   debugDeadEnd: {fileID: 292472254705311368, guid: ffd15ca32d238554594959ac5295e5d2,
     type: 3}
