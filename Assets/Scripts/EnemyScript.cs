@@ -28,8 +28,10 @@ public class EnemyScript : MonoBehaviour
         if (distanceToPlayer.magnitude <= detectionRange)
         {
             RaycastHit lineOfSightHit;
-            if (Physics.Raycast(transform.position, distanceToPlayer.normalized, out lineOfSightHit, detectionRange))
+            Debug.DrawRay(transform.position + Vector3.up * 0.4f, distanceToPlayer.normalized, new Color(1, 0, 0), detectionRange); // debug ray
+            if (Physics.Raycast(transform.position + Vector3.up * 0.4f, distanceToPlayer.normalized, out lineOfSightHit, detectionRange)) // apply offset so ray doesn't cast from inside floor
             {
+                Debug.Log("Something hit! tag="+lineOfSightHit.collider.gameObject.tag);
                 if (lineOfSightHit.collider.gameObject.CompareTag("Player"))
                     chasing = true;
                 else if (!keepChasing)

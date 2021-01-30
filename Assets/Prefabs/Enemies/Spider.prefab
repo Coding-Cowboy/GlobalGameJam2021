@@ -202,7 +202,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   player: {fileID: 0}
   chaseSpeed: 2.5
-  detectionRange: 15
+  detectionRange: 18
   keepChasing: 0
 --- !u!54 &6054171323388307146
 Rigidbody:
@@ -218,7 +218,7 @@ Rigidbody:
   m_UseGravity: 1
   m_IsKinematic: 0
   m_Interpolate: 0
-  m_Constraints: 80
+  m_Constraints: 116
   m_CollisionDetection: 0
 --- !u!136 &7309021492151476549
 CapsuleCollider:
