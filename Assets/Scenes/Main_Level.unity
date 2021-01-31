@@ -38,8 +38,7 @@ RenderSettings:
   m_ReflectionIntensity: 1
   m_CustomReflection: {fileID: 0}
   m_Sun: {fileID: 0}
-  m_IndirectSpecularColor: {r: 0.00008659188, g: 0.000080816506, b: 0.00014061817,
-    a: 1}
+  m_IndirectSpecularColor: {r: 0, g: 0, b: 0, a: 1}
   m_UseRadianceAmbientProbe: 0
 --- !u!157 &3
 LightmapSettings:
@@ -562,8 +561,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   gridSize: 23.5
-  rows: 5
-  cols: 5
+  rows: 7
+  cols: 7
   campFireSpawnChance: 0.25
   landmarkSpawnChance: 0.25
   pickupSpawnChance: 0.33
