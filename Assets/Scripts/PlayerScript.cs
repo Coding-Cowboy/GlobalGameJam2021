@@ -30,12 +30,20 @@ public class PlayerScript : MonoBehaviour
     public float shootSoundVolume = 0.7f;
     HeartManager heartManager;
 
+    public ParticleSystem RightBarrel;
+    public ParticleSystem LeftBarrel;
+    private bool side = false; //0 is right and 1 is left
+
     // Start is called before the first frame update
     void Start()
     {
         audioSource = GetComponent<AudioSource>();
 
         heartManager = FindObjectOfType<HeartManager>();
+
+        //Disable the particles from playing
+        RightBarrel.Pause();
+        LeftBarrel.Pause();
     }
 
     // Update is called once per frame
@@ -115,6 +123,16 @@ public class PlayerScript : MonoBehaviour
             // Shooting cooldown
             canShoot = false;
             Invoke("EnableShooting", shootCooldown);
+            if(side)
+            {
+                RightBarrel.Play();
+                side = !side;
+            }
+            else
+            {
+                LeftBarrel.Play();
+                side = !side;
+            }
         }
     }
 
