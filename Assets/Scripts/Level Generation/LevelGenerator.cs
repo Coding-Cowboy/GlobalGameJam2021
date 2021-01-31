@@ -35,7 +35,6 @@ public class LevelGenerator : MonoBehaviour
     private int endRow;
     private int endCol;
     private GameObject player;
-    private float spawnTimer = 0;
 
     private class MazeTile
     {
