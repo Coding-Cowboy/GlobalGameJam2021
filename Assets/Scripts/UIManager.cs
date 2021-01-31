@@ -32,6 +32,8 @@ public class UIManager : MonoBehaviour
     bool endgameFading = false;
 
     AudioSource music;
+    public AudioClip endgameMusic;
+    public AudioClip endgameSoundEffect;
     float volumeGoal;
     bool musicOut = false;
 
@@ -158,6 +160,19 @@ public class UIManager : MonoBehaviour
             if (endgameOverlay.alpha >= 1)
                 endgameFading = false;
         }
+        // Endgame music fade
+        if (endgameActive)
+            if (music.clip != endgameMusic)
+                if (music.volume > 0)
+                    music.volume -= 0.006f;
+                else
+                {
+                    music.clip = endgameMusic;
+                    music.Play();
+                }
+            else if (music.volume < volumeGoal && !fadingOut)
+                music.volume += 0.006f;
+
     }
 
     // Fade pause overlay in/out
@@ -198,6 +213,8 @@ public class UIManager : MonoBehaviour
     // Fade in the endgame overlay
     public void Endgame()
     {
+        if (!endgameActive)
+            SoundEffectScript.PlaySoundEffect(transform, endgameSoundEffect, 0.32f);
         endgameActive = true;
         endgameFading = true;
         inGamePanel.SetActive(false);
