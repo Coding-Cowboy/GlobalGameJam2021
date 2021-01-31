@@ -627,6 +627,7 @@ MonoBehaviour:
   shootSoundVolume: 1
   RightBarrel: {fileID: 3600596031109103825}
   LeftBarrel: {fileID: 3600596029498242198}
+  HitSound: {fileID: 8300000, guid: ecce99b5dd6ffdb40ab1ef163002d772, type: 3}
 --- !u!143 &1116647569603246524
 CharacterController:
   m_ObjectHideFlags: 0

@@ -32,6 +32,10 @@ public class PlayerScript : MonoBehaviour
 
     public ParticleSystem RightBarrel;
     public ParticleSystem LeftBarrel;
+
+    //Audio clip for getting hit
+    public AudioClip HitSound;
+    
     private bool side = false; //0 is right and 1 is left
 
     // Start is called before the first frame update
@@ -150,7 +154,7 @@ public class PlayerScript : MonoBehaviour
             //set flag and disable collider
             isHit = true;
             Debug.Log("Ive been hit spongebob me boy");
-            
+            SoundEffectScript.PlaySoundEffect(transform, HitSound, 1);
         }
         else if (other.gameObject.tag == "MedKit")
         {
@@ -171,8 +175,9 @@ public class PlayerScript : MonoBehaviour
             //set flag and disable collider
             isHit = true;
             Debug.Log("Ive been hit spongebob me boy");
+            SoundEffectScript.PlaySoundEffect(transform, HitSound, 1);
         }
-        
+
     }
 
     void EnableShooting()
